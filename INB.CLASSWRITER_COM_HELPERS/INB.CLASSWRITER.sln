@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LERESTRUTURA", "LERESTRUTURA\LERESTRUTURA.vbproj", "{E97DB835-EF45-4A00-A42B-BAD542EEC69E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "INB.CLASSWRITER", "INB.CLASSWRITER\INB.CLASSWRITER.vbproj", "{70978920-4E70-4091-A239-9E44501C9291}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.inbnet2.inb.gov.br:8080/tfs/inbcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = INB.CLASSWRITER\\INB.CLASSWRITER.vbproj
+		SccProjectName1 = INB.CLASSWRITER
+		SccLocalPath1 = INB.CLASSWRITER
+		SccProjectUniqueName2 = LERESTRUTURA\\LERESTRUTURA.vbproj
+		SccProjectName2 = LERESTRUTURA
+		SccLocalPath2 = LERESTRUTURA
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E97DB835-EF45-4A00-A42B-BAD542EEC69E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97DB835-EF45-4A00-A42B-BAD542EEC69E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97DB835-EF45-4A00-A42B-BAD542EEC69E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97DB835-EF45-4A00-A42B-BAD542EEC69E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70978920-4E70-4091-A239-9E44501C9291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70978920-4E70-4091-A239-9E44501C9291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70978920-4E70-4091-A239-9E44501C9291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70978920-4E70-4091-A239-9E44501C9291}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

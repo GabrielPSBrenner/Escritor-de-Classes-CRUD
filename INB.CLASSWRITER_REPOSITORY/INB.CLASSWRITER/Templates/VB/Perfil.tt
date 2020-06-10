@@ -1,0 +1,209 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+Imports System.Collections
+Imports System.Collections.Generic
+Imports System.Linq
+Imports System.Text
+Imports System.Threading.Tasks
+
+
+Public Class Perfil
+	Inherits INB.Procurase.Pessoa
+
+	Private Enum eGrupo
+		Desenvolvimento = 22
+		CargoChefia = 26
+	End Enum
+
+#Region "Properties"
+
+	Public ReadOnly Property iLogin() As Integer
+		Get
+			Return Integer.Parse(Login)
+		End Get
+	End Property
+	Private _Grupo As String
+	Public Property Grupo() As String
+		Get
+			Return _Grupo
+		End Get
+		Set(value As String)
+			_Grupo = value
+		End Set
+	End Property
+	Private _MeuPerfil As Perfil
+	Public ReadOnly Property MeuPerfil() As Perfil
+		Get
+			Return _MeuPerfil
+		End Get
+	End Property
+
+	Private _MeusPerfis As List(Of ePerfil)
+	Friend ReadOnly Property MeusPerfis() As List(Of ePerfil)
+		Get
+			If _MeusPerfis Is Nothing Then
+				_MeusPerfis = New List(Of ePerfil)()
+			End If
+			Return _MeusPerfis
+		End Get
+	End Property
+
+	Private _MeusCentroCusto As List(Of String)
+	Public ReadOnly Property MeusCentroCusto() As List(Of String)
+		Get
+			Return _MeusCentroCusto
+		End Get
+	End Property
+
+	Private _MinhasSubstituicoes As List(Of String)
+	Public ReadOnly Property MinhasSubstituicoes() As List(Of String)
+		Get
+			Return _MinhasSubstituicoes
+		End Get
+	End Property
+
+	Private _DataInicioSessao As DateTime
+	Public Property DataInicioSessao() As DateTime
+		Get
+			Return _DataInicioSessao
+		End Get
+		Set(value As DateTime)
+			_DataInicioSessao = value
+		End Set
+	End Property
+
+	Private _DataUltimaAtividade As DateTime
+	Public Property DataUltimaAtividade() As DateTime
+		Get
+			Return _DataUltimaAtividade
+		End Get
+		Set(value As DateTime)
+			_DataUltimaAtividade = value
+		End Set
+	End Property
+	Public ReadOnly Property Idle() As Integer
+		Get
+			Return DateTime.Now.Subtract(DataUltimaAtividade).Minutes
+		End Get
+	End Property
+	Private _NomeEstacao As String
+	Public Property NomeEstacao() As String
+		Get
+			Return _NomeEstacao
+		End Get
+		Set(value As String)
+			_NomeEstacao = value
+		End Set
+	End Property
+	Private _IP As String
+	Public Property IP() As String
+		Get
+			Return _IP
+		End Get
+		Set(value As String)
+			_IP = value
+		End Set
+	End Property
+
+#End Region
+
+	Private Sub AdicionaPerfil(Tipo As ePerfil)
+		If Not PossuiPerfil(Tipo) Then
+			MeusPerfis.Add(Tipo)
+		End If
+	End Sub
+
+	Public Function PossuiPerfil(Tipo As ePerfil) As Boolean
+		Return MeusPerfis.Contains(Tipo)
+	End Function
+
+	Public Function PossuiPerfilCompara(Comparacao As eComparacao, ParamArray Tipo As ePerfil()) As Boolean
+		Dim Result As Boolean = False
+		For Each Item As ePerfil In Tipo
+			Result = MeusPerfis.Contains(Item)
+			If Comparacao = eComparacao.[OR] AndAlso Result = True Then
+				Exit For
+			ElseIf Comparacao = eComparacao.[AND] AndAlso Result = False Then
+				Exit For
+			End If
+		Next
+		Return Result
+	End Function
+
+#Region "Custom Properties"
+
+#End Region
+
+	Public Sub New(pLogin As String)
+		If String.IsNullOrWhiteSpace(pLogin) = False Then
+			Load(pLogin)
+		End If
+
+		LoadProperties(eLoadProperties.Cadastro)
+		LoadProperties(eLoadProperties.ActiveDirectory)
+		LoadProperties(eLoadProperties.Situacao)
+
+		_MeusCentroCusto = New List(Of [String])()
+		DataInicioSessao = DateTime.Now
+		NomeEstacao = MyGlobal.NomeEstacao()
+		IP = MyGlobal.IP()
+
+		Dim arrList As ArrayList = INB.CONSEG.REGRASNEGOCIO.CEmp.GruposEmpregado(CInt(eSistema.Generico), Me.iLogin)
+		For Each Item As INB.CONSEG.BASECLASS.GrupoUsuario In arrList
+			Select Case CType(Item.GRCodigo, eGrupo)
+				Case eGrupo.CargoChefia
+					AdicionaPerfil(ePerfil.Gestor)
+					AdicionaPerfil(ePerfil.DefinePermissao)
+					Exit Select
+				Case eGrupo.Desenvolvimento
+					AdicionaPerfil(ePerfil.Desenvolvimento)
+					AdicionaPerfil(ePerfil.Administrador)
+					AdicionaPerfil(ePerfil.SimulaUsuario)
+					Exit Select
+			End Select
+		Next
+
+
+		arrList = INB.CONSEG.REGRASNEGOCIO.CEmp.GruposEmpregado(CInt(eSistema.Corrente), Me.iLogin)
+		Dim arrGrupoEnum As List(Of eGrupo) = [Enum].GetValues(GetType(eGrupo)).Cast(Of eGrupo)().ToList()
+		For Each Item As INB.CONSEG.BASECLASS.GrupoUsuario In arrList
+			If arrGrupoEnum.Contains(CType(Item.GRCodigo, eGrupo)) Then
+				AdicionaPerfil(ePerfil.PodeAcessar)
+				Exit For
+			End If
+		Next
+
+		If PossuiPerfilCompara(eComparacao.[OR], ePerfil.Desenvolvimento, ePerfil.SimulaUsuario) Then
+			AdicionaPerfil(ePerfil.PodeAcessar)
+		End If
+
+
+		_MeusCentroCusto = New List(Of String)()
+		For Each Item As INB.CONSEG.BASECLASS.vwGDEPTO In ListaCentroCusto(True)
+			_MeusCentroCusto.Add(Item.CODDEPARTAMENTO)
+		Next
+
+		_MinhasSubstituicoes = New List(Of String)()
+		For Each Item As INB.CONSEG.BASECLASS.vwSubstituto In ListaSubstituicao()
+			_MinhasSubstituicoes.Add(Item.SUCCusto)
+		Next
+
+		If _MeuPerfil Is Nothing Then
+			_MeuPerfil = DirectCast(Me.MemberwiseClone(), Perfil)
+
+		End If
+	End Sub
+
+	Friend Function ListaSubstituicao() As List(Of INB.CONSEG.BASECLASS.vwSubstituto)
+		Return INB.CONSEG.REGRASNEGOCIO.CSubstitutos.ListaSubstituicoesAtivas_T(Me.iLogin)
+	End Function
+
+	Friend Function ListaCentroCusto(BuscaDelegados As Boolean) As List(Of INB.CONSEG.BASECLASS.vwGDEPTO)
+		Return INB.CONSEG.REGRASNEGOCIO.CCentroCusto.ListaCentroCustoEmpregado_T(Me.iLogin, CInt(eSistema.Corrente), INB.CONSEG.REGRASNEGOCIO.CCentroCusto.eOrder.Nome, BuscaDelegados, INB.CONSEG.REGRASNEGOCIO.CCentroCusto.eSel.ArvoreSomenteChefe, False)
+	End Function
+
+End Class

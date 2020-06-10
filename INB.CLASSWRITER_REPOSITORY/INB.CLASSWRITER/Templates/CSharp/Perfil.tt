@@ -1,0 +1,200 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <#=_Config.Namespace#>
+{
+	public class Perfil : INB.Procurase.Pessoa
+	{
+		private enum eGrupo
+		{
+			Desenvolvimento = 22,
+			CargoChefia = 26
+		}
+
+		#region Properties
+
+		public int iLogin
+		{
+			get { return int.Parse(Login); }
+		}
+		private string _Grupo;
+		public string Grupo
+		{
+			get { return _Grupo; }
+			set { _Grupo = value; }
+		}
+		private Perfil _MeuPerfil;
+		public Perfil MeuPerfil
+		{
+			get { return _MeuPerfil; }
+		}
+
+		private List<ePerfil> _MeusPerfis;
+		internal List<ePerfil> MeusPerfis
+		{
+			get
+			{
+				if (_MeusPerfis == null) _MeusPerfis = new List<ePerfil>();
+				return _MeusPerfis;
+			}
+		}
+
+		private List<string> _MeusCentroCusto;
+		public List<string> MeusCentroCusto
+		{
+			get { return _MeusCentroCusto; }
+		}
+
+		private List<string> _MinhasSubstituicoes;
+		public List<string> MinhasSubstituicoes
+		{
+			get { return _MinhasSubstituicoes; }
+		}
+
+		private DateTime _DataInicioSessao;
+		public DateTime DataInicioSessao
+		{
+			get { return _DataInicioSessao; }
+			set { _DataInicioSessao = value; }
+		}
+
+		private DateTime _DataUltimaAtividade;
+		public DateTime DataUltimaAtividade
+		{
+			get { return _DataUltimaAtividade; }
+			set { _DataUltimaAtividade = value; }
+		}
+		public int Idle
+		{
+			get { return DateTime.Now.Subtract(DataUltimaAtividade).Minutes; }
+		}
+		private string _NomeEstacao;
+		public string NomeEstacao
+		{
+			get { return _NomeEstacao; }
+			set { _NomeEstacao = value; }
+		}
+		private string _IP;
+		public string IP
+		{
+			get { return _IP; }
+			set { _IP = value; }
+		}
+
+		#endregion
+
+		private void AdicionaPerfil(ePerfil Tipo)
+		{
+			if (!PossuiPerfil(Tipo))
+				MeusPerfis.Add(Tipo);
+		}
+
+		public bool PossuiPerfil(ePerfil Tipo)
+		{
+			return MeusPerfis.Contains(Tipo);
+		}
+
+		public bool PossuiPerfilCompara(eComparacao Comparacao, params ePerfil[] Tipo)
+		{
+			bool Result = false;
+			foreach (ePerfil Item in Tipo)
+			{
+				Result = MeusPerfis.Contains(Item);
+				if (Comparacao == eComparacao.OR && Result == true)
+					break;
+				else if (Comparacao == eComparacao.AND && Result == false)
+					break;
+			}
+			return Result;
+		}
+		
+		#region "Custom Properties"
+
+		#endregion
+
+		public Perfil(string pLogin)
+		{
+			if (string.IsNullOrWhiteSpace(pLogin) == false)
+				Load(pLogin);
+
+			LoadProperties(eLoadProperties.Cadastro);
+			LoadProperties(eLoadProperties.ActiveDirectory);
+			LoadProperties(eLoadProperties.Situacao);
+
+			_MeusCentroCusto = new List<String>();
+			DataInicioSessao = DateTime.Now;
+			NomeEstacao = MyGlobal.NomeEstacao();
+			IP = MyGlobal.IP();
+
+			ArrayList arrList = INB.CONSEG.REGRASNEGOCIO.CEmp.GruposEmpregado((int)eSistema.Generico, this.iLogin);
+			foreach (INB.CONSEG.BASECLASS.GrupoUsuario Item in arrList)
+			{
+				switch ((eGrupo)Item.GRCodigo)
+				{
+					case eGrupo.CargoChefia:
+						AdicionaPerfil(ePerfil.Gestor);
+						AdicionaPerfil(ePerfil.DefinePermissao);
+						break;
+					case eGrupo.Desenvolvimento:
+						AdicionaPerfil(ePerfil.Desenvolvimento);
+						AdicionaPerfil(ePerfil.Administrador);
+						AdicionaPerfil(ePerfil.SimulaUsuario);
+						break;
+				}
+			}
+
+
+			arrList = INB.CONSEG.REGRASNEGOCIO.CEmp.GruposEmpregado((int)eSistema.Corrente, this.iLogin);
+			List<eGrupo> arrGrupoEnum = Enum.GetValues(typeof(eGrupo)).Cast<eGrupo>().ToList();
+			foreach (INB.CONSEG.BASECLASS.GrupoUsuario Item in arrList)
+			{
+				if (arrGrupoEnum.Contains((eGrupo)Item.GRCodigo))
+				{
+					AdicionaPerfil(ePerfil.PodeAcessar);
+					break;
+				}
+			}
+
+			if (PossuiPerfilCompara(eComparacao.OR, ePerfil.Desenvolvimento, ePerfil.SimulaUsuario))
+				AdicionaPerfil(ePerfil.PodeAcessar);
+
+			
+			_MeusCentroCusto = new List<string>();
+			foreach (INB.CONSEG.BASECLASS.vwGDEPTO Item in ListaCentroCusto(true))
+			{
+				_MeusCentroCusto.Add(Item.CODDEPARTAMENTO);
+			}
+
+			_MinhasSubstituicoes = new List<string>();
+			foreach (INB.CONSEG.BASECLASS.vwSubstituto Item in ListaSubstituicao())
+			{
+				_MinhasSubstituicoes.Add(Item.SUCCusto);
+			}
+
+			if (_MeuPerfil == null)
+				_MeuPerfil = (Perfil)this.MemberwiseClone();
+
+		}
+
+		internal List<INB.CONSEG.BASECLASS.vwSubstituto> ListaSubstituicao()
+		{
+			return INB.CONSEG.REGRASNEGOCIO.CSubstitutos.ListaSubstituicoesAtivas_T(this.iLogin);
+		}
+
+		internal List<INB.CONSEG.BASECLASS.vwGDEPTO> ListaCentroCusto(bool BuscaDelegados)
+		{
+			return INB.CONSEG.REGRASNEGOCIO.CCentroCusto.ListaCentroCustoEmpregado_T(this.iLogin, (int)eSistema.Corrente, INB.CONSEG.REGRASNEGOCIO.CCentroCusto.eOrder.Nome, BuscaDelegados, INB.CONSEG.REGRASNEGOCIO.CCentroCusto.eSel.ArvoreSomenteChefe, false);
+		}
+
+	}
+}

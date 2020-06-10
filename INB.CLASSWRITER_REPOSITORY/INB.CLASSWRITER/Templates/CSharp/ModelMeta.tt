@@ -1,0 +1,46 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <#=_Config.Namespace#>
+{
+
+	[MetadataType(typeof(MD_<#=_Tabela.Nome#>))]
+	public partial class <#=_Tabela.Nome#>
+	{
+		public <#=_Tabela.Nome#> MyBase
+        {
+            get
+            {               
+                <#=_Tabela.Nome#> oRetorno = new <#=_Tabela.Nome#>();
+                INB.Infra.Data.Util.CopyObject.CopyObjectData(this, oRetorno);
+                return oRetorno;
+            }
+        }	
+
+
+			internal class MD_<#=_Tabela.Nome#>
+			{
+		<#
+			For Each Item As LERESTRUTURA.TABLE.stCampo in _Tabela.Campos
+		#>
+				[DisplayName("<#=Item.Nome#>")]
+				public object <#=Item.Nome#> { get; set; }
+
+		<# 
+			Next
+		#>
+			}
+	}
+
+}

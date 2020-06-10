@@ -1,0 +1,83 @@
+Public Class Controller
+   Implements IDisposable
+
+   Private WithEvents Persiste As PersisteDados.ClsPersiste
+   Private lobjController As Object
+
+   Public Function ObjectsReturn(Optional ByVal Order As String = "") As ArrayList
+      Return Persiste.ObjectsReturn(lobjController, Order)
+   End Function
+
+   Public Function ObjectReturnPK() As Object
+      Return Persiste.ObjectReturnPk(lobjController)
+   End Function
+
+   Public Function AllObjects(ByVal Ordem As String) As ArrayList
+      Return Persiste.AllObjects(lobjController, Ordem)
+   End Function
+
+   Public Sub Insert()
+      Persiste.Insert(lobjController)
+   End Sub
+
+   Public Sub Update()
+      Persiste.Update(lobjController)
+   End Sub
+
+   Public Sub Delete()
+      Persiste.Delete(lobjController)
+   End Sub
+
+   Public Sub New(ByVal objController As Object)
+      lobjController = objController
+      Persiste = New PersisteDados.ClsPersiste(Path)
+   End Sub
+
+   Protected Overrides Sub Finalize()
+      lobjController = Nothing
+      Persiste.Dispose()
+      Persiste = Nothing
+      MyBase.Finalize()
+   End Sub
+
+   Private Sub Persiste_AfterDelete(ByVal Success As Boolean, ByVal Err As System.Exception) Handles Persiste.AfterDelete
+      If Success = False Then
+         'Erro na exclusão
+
+      End If
+   End Sub
+
+   Private Sub Persiste_AfterInsert(ByVal Success As Boolean, ByVal Err As System.Exception) Handles Persiste.AfterInsert
+      If Success = False Then
+         'Erro na inclusão
+
+      End If
+   End Sub
+
+   Private Sub Persiste_AfterUpdate(ByVal Success As Boolean, ByVal Err As System.Exception) Handles Persiste.AfterUpdate
+      If Success = False Then
+         'Erro na alteração
+
+      End If
+   End Sub
+
+   Private Sub Persiste_BeforeDelete(ByRef Cancel As Boolean) Handles Persiste.BeforeDelete
+      'Evento ocorre antes de confirmar exclusão
+
+   End Sub
+
+   Private Sub Persiste_BeforeInsert(ByRef Cancel As Boolean) Handles Persiste.BeforeInsert
+      'Evento ocorre antes de confirmar a inclusão 
+
+   End Sub
+
+   Private Sub Persiste_BeforeUpdate(ByRef Cancel As Boolean) Handles Persiste.BeforeUpdate
+      'Evento ocorre antes de confimar a atualização 
+
+   End Sub
+
+   Public Sub Dispose() Implements System.IDisposable.Dispose
+      Persiste.Dispose()
+      Persiste = Nothing
+   End Sub
+End Class

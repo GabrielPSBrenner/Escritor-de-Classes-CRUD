@@ -1,0 +1,272 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <#=_Config.Namespace#>
+{
+	public class Notificacao
+	{
+
+		#region "Methods Default"
+
+		public static INB.Correio.MailTemplate ModeloEmail
+		{
+			get
+			{
+				INB.Correio.MailTemplate MailTemplate = new INB.Correio.MailTemplate();
+				MailTemplate.Cabecalho = MyGlobal.EmailSistema.DisplayName + ((MyGlobal.IsTestEnvironment) ? " - TESTE" : "");
+				MailTemplate.Rodape = "INB - Indústrias Nucleares do Brasil S.A.";
+				MailTemplate.RodapeAlinhamento = INB.Correio.MailTemplate.eTextAlign.Center;
+				//O caminho interno para testes é:
+				//http://sistemasteste.inbnet2.inb.gov.br/html/MailTemplate
+				MailTemplate.Caminho = "http://sistemas.inb.gov.br/MailTemplate/temp_07.htm";
+				MailTemplate.CaminhoImagem = "http://sistemas.inb.gov.br/MailTemplate/temp_07";
+				try
+				{
+					MailTemplate.CarregarTemplate();
+					if (String.IsNullOrWhiteSpace(MailTemplate.ArquivoConteudo))
+						throw new Exception(); //carrega um template default
+				}
+				catch (Exception ex) //não faz nada com ex
+				{
+					MailTemplate.ArquivoConteudo = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd'> <html xmlns='http://www.w3.org/1999/xhtml' lang='pt-br'> <head> <title>INB - Indústrias Nucleares do Brasil SA</title> <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' /> </head> <body> <!--Base URL(http://www.inb.gov.br/MailTemplate/temp_07/)--> <table width='100%' bgcolor='#ffffff'> <tr>  <td align='center'> <!--Content--> <table width='600' border=0> <tr>  <td width='119' height='52'>INB</td>  <td width='520'><p align='[!HeaderAlign!]'><font face='Arial' size='3' color='#000000'><b>[!Header!]</b></font></p></td> </tr> <tr>  <td colspan='2' height='4'>   <table width='100%' cellpadding='0' cellspacing='0'>    <tr><td bgcolor='#eeeeee' height='1'><img src='temp_07/dot.gif' width='1' height='1'/></td></tr>    <tr><td bgcolor='#ffffff' height='1'><img src='temp_07/dot.gif' width='1' height='1'/></td></tr>    <tr><td bgcolor='#eeeeee' height='1'><img src='temp_07/dot.gif' width='1' height='1'/></td></tr>   </table>  </td> </tr> <tr>  <td colspan='2'>   <br/>   <p align='left'><font face='Verdana' color='#000000' size='1'>[!Content!]</font></p>   <br/>  </td> </tr> <tr>  <td colspan='2'>   <p align='[!FooterAlign!]'><font face='Verdana' color='#000000' size='1'>[!Footer!]</font></p>  </td> </tr> <tr>  <td colspan='2' bgcolor='#e3e3e3' height='30'><img src='temp_07/dot.gif' width='1' height='1'/></td> </tr> </table> <!--End Content-->  </td> </tr> </table> </body> </html>";
+					//return null; //template não disponível
+				}
+				return MailTemplate;
+			}
+		}
+
+		public static void enviaNotificacao(object Conta, string Assunto, string Mensagem, bool UsaTemplate = true)
+		{
+			try
+			{
+				INB.Correio.Email Email = new INB.Correio.Email();
+				Email.De = MyGlobal.EmailSistema;
+				Email.Assunto = Assunto;
+				Email.Corpo = Mensagem;
+				if ((Conta) is MailAddress)
+				{
+					Email.Para.Add(Conta);
+				}
+				else if ((Conta) is MailAddressCollection)
+				{
+					Email.Para.AddRange((MailAddressCollection)Conta);
+				}
+				else if ((Conta) is int)
+				{
+					Email.Para.Add(INB.Correio.Funcoes.retornaEmail((int)Conta));
+				}
+				else
+				{
+					Email.Para.Add(INB.Correio.Funcoes.retornaEmail((string)Conta));
+				}
+				if(UsaTemplate)
+					Email.Template = ModeloEmail;
+				Email.Prioridade = System.Net.Mail.MailPriority.High;
+				Email.Envia();
+			}
+			catch (Exception ex)
+			{
+				throw new INBException("Falha ao enviar notificação", ex);
+			}
+
+		}
+
+		public static void NotificaErro(string Mensagem, Perfil pPerfil = null)
+		{
+			Exception appException = null;
+			StringBuilder errMessage = new StringBuilder();
+
+			if ((System.Web.HttpContext.Current != null))
+			{
+				appException = System.Web.HttpContext.Current.Server.GetLastError();
+			}
+
+			errMessage.AppendLine("<style type='text/css'>");
+			errMessage.AppendLine(".UsuarioInfo {");
+			errMessage.AppendLine("border-spacing: 0;");
+			errMessage.AppendLine("background-color:#d7d7d7;");
+			errMessage.AppendLine("}");
+			errMessage.AppendLine(".UsuarioInfo td{");
+			errMessage.AppendLine("padding:5px;");
+			errMessage.AppendLine("}");
+			errMessage.AppendLine(".UsuarioInfo .Coluna1{");
+			errMessage.AppendLine("background-color:#808080;");
+			errMessage.AppendLine("}");
+			errMessage.AppendLine(".UsuarioInfo .Coluna1 font{");
+			errMessage.AppendLine("\tcolor:#fff;");
+			errMessage.AppendLine("}");
+			errMessage.AppendLine(".UsuarioInfo .StackTrace .Coluna2{");
+			errMessage.AppendLine("background-color:#c5f7bf;");
+			errMessage.AppendLine("}");
+			errMessage.AppendLine("</style>");
+			errMessage.AppendLine("Mensagem: " + Mensagem + "<br><br>");
+
+
+			Notificacao.IniciaTabela(ref errMessage);
+			Notificacao.InsereDebugHeader(ref errMessage, (System.Web.HttpContext)System.Web.HttpContext.Current);
+
+			if (pPerfil != null)
+			{
+				string cTipo = "";
+				switch (pPerfil.Tipo)
+				{
+					case INB.Procurase.Pessoa.eTipoPessoa.Contratado:
+						cTipo = "Terceirizado";
+						break;
+					case INB.Procurase.Pessoa.eTipoPessoa.Empregado:
+						cTipo = "Empregado";
+						break;
+					case INB.Procurase.Pessoa.eTipoPessoa.Estagiario:
+						cTipo = "Estagiário";
+						break;
+					case INB.Procurase.Pessoa.eTipoPessoa.Visitante:
+					case INB.Procurase.Pessoa.eTipoPessoa.NaoDefinido:
+						//Não deveria estar tentando acessar um sistema com essa identificação
+						cTipo = "Usuário inválido";
+						break;
+				}
+				InsereLinha(errMessage, "Tipo", cTipo);
+
+				string cPerfil = "";
+				foreach (INB.Procurase.Pessoa.eTipoEmpregado Item in pPerfil.ListaTipoEmpregado)
+				{
+					cPerfil += Item.ToString() + ",";
+				}
+
+				if (string.IsNullOrWhiteSpace(cPerfil) == false)
+					cPerfil = cPerfil.Substring(0, cPerfil.Length - 1);
+
+				InsereLinha(errMessage, "Perfil", cPerfil);
+				InsereLinha(errMessage, "Matrícula", pPerfil.Matricula.ToString());
+				InsereLinha(errMessage, "Nome", pPerfil.Nome);
+				InsereLinha(errMessage, "Nome AD", pPerfil.NomeAd);
+				InsereLinha(errMessage, "E-mail", pPerfil.Email);
+				InsereLinha(errMessage, "Ramal", pPerfil.Ramais);
+				InsereLinha(errMessage, "Centro Custo", pPerfil.CentroCusto);
+				InsereLinha(errMessage, "Lotação", pPerfil.Lotacao);
+				InsereLinha(errMessage, "Local de Trabalho", pPerfil.LocalTrabalho);
+				InsereLinha(errMessage, "Empresa", pPerfil.Empresa);
+				InsereLinha(errMessage, "Local", pPerfil.Local);
+
+
+				if (pPerfil.Situacao == INB.Procurase.Pessoa.eTipoSituacao.Ferias)
+				{
+					InsereLinha(errMessage, "Férias", pPerfil.DataFeriasInicio.ToShortDateString() + " à " + pPerfil.DataFeriasFim.ToShortDateString());
+				}
+				else
+				{
+					InsereLinha(errMessage, "Status", pPerfil.Situacao == INB.Procurase.Pessoa.eTipoSituacao.Ativo ? "Ativo" : "Inativo");
+				}
+
+			}
+			if (appException is System.Data.Entity.Validation.DbEntityValidationException)
+			{
+				string ErrorMessage = INBException.GetEntityValidationError((System.Data.Entity.Validation.DbEntityValidationException)appException);
+				Notificacao.InsereLinha(errMessage, "Mensagem", "<div style='width:400px;overflow:auto'>" + ErrorMessage + "</div>");
+			}
+			else if ((appException != null))
+			{
+				Notificacao.InsereLinha(errMessage, "Stack Trace", "<div style='width:400px;overflow:auto'>" + appException.StackTrace + "</div>", "StackTrace");
+
+				while ((appException.InnerException != null))
+				{
+					Notificacao.InsereLinha(errMessage, "Mensagem", "<div style='width:400px;overflow:auto'>" + appException.InnerException.Message + "</div>");
+					Notificacao.InsereLinha(errMessage, "Stack Trace", "<div style='width:400px;overflow:auto'>" + appException.InnerException.StackTrace + "</div>", "StackTrace");
+					appException = appException.InnerException;
+				}
+
+				System.Web.HttpContext.Current.Server.ClearError();
+			}
+			Notificacao.FechaTabela(ref errMessage);
+
+			Notificacao.enviaNotificacao(MyGlobal.EmailErro, "Erro na Aplicação", errMessage.ToString());
+		}
+
+
+		public static void NotificaAdmin(string Mensagem)
+		{
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+			sb.AppendLine("Mensagem: " + Mensagem + "<br><br>");
+
+			Notificacao.IniciaTabela(ref sb);
+			Notificacao.InsereDebugHeader(ref sb, System.Web.HttpContext.Current);
+			Notificacao.FechaTabela(ref sb);
+
+			Notificacao.enviaNotificacao(MyGlobal.EmailErro, "Admin", sb.ToString());
+		}
+
+		public static void NotificaParametros(params object[] args)
+		{
+			StringBuilder s = new StringBuilder();
+
+			foreach (object Item in args)
+			{
+				s.Append((string)Item.ToString() + ", ");
+			}
+			NotificaAdmin(s.ToString());
+		}
+
+		public static void InsereDebugHeader(ref StringBuilder f, System.Web.HttpContext p)
+		{
+			InsereLinha(f, "Máquina", Environment.MachineName);
+			if ((p != null))
+			{
+				InsereLinha(f, "Host", p.Request.ServerVariables["Server_Name"]);
+				InsereLinha(f, "URL", p.Request.ServerVariables["Script_Name"]);
+				InsereLinha(f, "Horário", System.DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+				InsereLinha(f, "Usuário logado", p.User.Identity.Name);
+				InsereLinha(f, "IP", p.Request.UserHostName);
+				InsereLinha(f, "Navegador", p.Request.UserAgent);
+			}
+		}
+
+		public static void IniciaTabela(ref StringBuilder f)
+		{
+			f.AppendLine("<table width='790' class=\"UsuarioInfo\" cellspacing=\"0\">");
+		}
+		public static void InsereLinha(StringBuilder f, string NomeCampo, string Valor)
+		{
+			InsereLinha(f, NomeCampo, Valor, "");
+		}
+		public static void InsereLinha(StringBuilder f, string NomeCampo, string Valor, string ClassName)
+		{
+			if (string.IsNullOrWhiteSpace(ClassName))
+			{
+				f.AppendLine("<tr>");
+			}
+			else
+			{
+				f.AppendLine("<tr class=" + ClassName + ">");
+			}
+
+			f.AppendLine(string.Format("<td align='right' width='120' valign='top' class=\"Coluna1\"><font face='Verdana' size='1' style='font-size:11px' color='#000000'>{0}:</font></td>", NomeCampo));
+			if (Valor == null)
+				Valor = "";
+			f.AppendLine(string.Format("<td valign='top' width='670' class=\"Coluna2\"><font face='Verdana' size='1' style='font-size:11px' color='#000000'>{0}</font></td>", Valor.Replace("\n", "<br />")));
+			f.AppendLine("</tr>");
+		}
+		public static void FechaTabela(ref StringBuilder f)
+		{
+			f.AppendLine("</table>");
+		}
+
+		#endregion
+
+		#region "Methods Custom"
+
+
+		#endregion
+
+	}
+}

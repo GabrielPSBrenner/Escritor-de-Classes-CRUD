@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<ConfiguracaoFormularios>
+	<FrmPasso1>
+		<CboTipoConexao></CboTipoConexao>
+		<TxtServidor>LOCALHOST</TxtServidor>
+		<TxtBancoDados></TxtBancoDados>
+		<TxtUID></TxtUID>
+		<TxtPWD></TxtPWD>
+	</FrmPasso1>
+	<FrmPasso2>
+		<ChkClasses>True</ChkClasses>
+		<ChkCRUDModel>True</ChkCRUDModel>
+		<ChkControladora>True</ChkControladora>
+		<ChkXML>True</ChkXML>
+	</FrmPasso2>
+	<FrmPasso3>
+		<DestinoArquivos><![CDATA[]]></DestinoArquivos>
+		<PrefixoClasses></PrefixoClasses>
+		<CaminhoPadraoXml></CaminhoPadraoXml>
+	</FrmPasso3>
+</ConfiguracaoFormularios>

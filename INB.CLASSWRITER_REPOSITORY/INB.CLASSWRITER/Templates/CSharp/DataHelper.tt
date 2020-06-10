@@ -1,0 +1,191 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Configuration;
+using System.Data.Entity;
+using System.Data.Entity.Core.EntityClient;
+using System.Reflection;
+using System.Linq;
+using System.Data.SqlClient;
+
+namespace <#=_Config.Namespace#>
+{
+	public class DataHelper
+	{
+		public enum eDatabase
+		{
+			<#=_Config.DataContextName#>
+		}
+		
+		private static string GetModelName(eDatabase Database)
+		{
+			switch (Database)
+			{
+				case eDatabase.<#=_Config.DataContextName#>:
+					return "cn<#=_Config.DataContextName#>";
+			}
+			return "";
+		}
+		
+		public static string GetConnectionString(eDatabase Database)
+		{
+			string Key = "";
+
+			switch (Database)
+			{
+				case eDatabase.<#=_Config.DataContextName#>:
+					Key = "cn<#=_Config.DataContextName#>";
+					break;
+			}
+
+			if (MyGlobal.IsTestEnvironment) Key += (ConfigurationManager.ConnectionStrings[Key + "Teste"] != null) ? "Teste" : "";
+
+			return ConfigurationManager.ConnectionStrings[Key].ConnectionString;
+		}
+
+		private static System.Data.Entity.DbContext GetDataContext(eDatabase Database, System.Data.Entity.DbContext MyDb = null)
+		{
+			if (MyDb != null)
+			{
+				return MyDb;
+			}
+			DbContext Result = null;
+			switch (Database)
+			{
+				case eDatabase.<#=_Config.DataContextName#>:
+					Result = new <#=_Config.Namespace#>.DM_<#=_Config.DataContextName#>Container();
+					break;
+			}
+			;
+			Result.Database.Connection.ConnectionString = GetConnectionString(Database);
+			Result.Database.CommandTimeout = 1200;
+			Result.Configuration.ProxyCreationEnabled = false;
+			return Result;
+		}
+
+		public static <#=_Config.Namespace#>.DM_<#=_Config.DataContextName#>Container GetDataContext<#=_Config.DataContextName#>(System.Data.Entity.DbContext MyDb = null)
+		{
+			return (<#=_Config.Namespace#>.DM_<#=_Config.DataContextName#>Container)GetDataContext(eDatabase.<#=_Config.DataContextName#>, MyDb);
+		}
+
+		#region "Other Methods"
+
+		public static SqlCommand GetSqlCommand(SqlConnection connection)
+		{
+			var Result = connection.CreateCommand();
+
+			Result.CommandTimeout = connection.ConnectionTimeout;
+
+			return Result;
+		}
+
+		public static void ReflectObject(Object Target, Object Source)
+		{
+			if (Source == null | Target == null)
+			{
+				return;
+			}
+			BindingFlags Flags = BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			PropertyInfo[] arrPropertiesSource = Source.GetType().GetProperties(Flags);
+
+			//Procura em cada propriedade do Source uma propriedade 
+			//correspondente em Target
+			foreach (PropertyInfo Item in arrPropertiesSource)
+			{
+				PropertyInfo oProperty = Target.GetType().GetProperty(Item.Name);
+				//Verifica se a propriedade existe no destino
+				if (oProperty == null)
+				{
+					continue;
+				}
+				//Verifica se é um tipo válido
+				if (!(oProperty.PropertyType.IsPrimitive | oProperty.PropertyType.IsArray | oProperty.PropertyType.IsSerializable | object.ReferenceEquals(oProperty.PropertyType, typeof(System.DateTime)) | object.ReferenceEquals(oProperty.PropertyType, typeof(System.DateTime?))))
+				{
+					continue;
+				}
+
+				//Armazena o valor do destino para uma avaliação: evitar que se tente gravar dados nessa propriedade. O linq gera erro quando tem valor.
+				object oValueTarget = oProperty.GetValue(Target, null);
+
+				//Busca a propriedade na fonte
+				oProperty = Source.GetType().GetProperty(Item.Name, Flags);
+				if (oProperty == null)
+				{
+					continue;
+				}
+
+				object oValue = oProperty.GetValue(Source, null);
+				bool IsPK = false;
+				oProperty = Target.GetType().GetProperty(Item.Name, Flags);
+				if (object.ReferenceEquals(oProperty.PropertyType, typeof(System.Data.Linq.Mapping.ColumnAttribute)))
+				{
+					IsPK = IsPrimaryKey(Source, oProperty.Name);
+				}
+				if (IsPK & HasValue(oValueTarget))
+				{
+					//Não atualiza
+				}
+				else
+				{
+					if (oProperty.CanWrite)
+					{
+						oProperty.SetValue(Target, oValue, null);
+					}
+				}
+			}
+		}
+
+		private static bool HasValue(object Source)
+		{
+			//Somente para campos chave primaria
+			bool Result = false;
+			if ((Source) is int | (Source) is long | (Source) is double)
+			{
+				double val = 0;
+				double.TryParse(Source.ToString(), out val);
+				if (val > 0)
+				{
+					Result = true;
+				}
+			}
+			else if ((Source) is string)
+			{
+				string val = (string)Source;
+				Result = string.IsNullOrEmpty(val);
+			}
+			return Result;
+		}
+
+		public static PropertyInfo GetPrimaryKey(object Source)
+		{
+			PropertyInfo[] infos = Source.GetType().GetProperties();
+			PropertyInfo PKProperty = null;
+			foreach (PropertyInfo info in infos)
+			{
+				dynamic column = info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(System.Data.Linq.Mapping.ColumnAttribute)).FirstOrDefault(x => (((System.Data.Linq.Mapping.ColumnAttribute)x).IsPrimaryKey && ((System.Data.Linq.Mapping.ColumnAttribute)x).DbType.Contains("NOT NULL")));
+				if (column != null)
+				{
+					PKProperty = info;
+					break; // TODO: might not be correct. Was : Exit For
+				}
+			}
+			return PKProperty;
+		}
+
+		public static bool IsPrimaryKey(object Source, string PropertyName)
+		{
+			PropertyInfo PropAux = GetPrimaryKey(Source);
+			if (PropAux != null && PropAux.Name.Equals(PropertyName, StringComparison.InvariantCultureIgnoreCase))
+			{
+				return true;
+			}
+			return false;
+		}
+
+		#endregion
+	}
+}

@@ -1,0 +1,1536 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+INB.CLASSWRITER
+</name>
+</assembly>
+<members>
+<member name="M:INB.CLASSWRITER.My.Templates.VB.INBException.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.INBException">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.INBExceptionBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.Repository.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.Repository">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.RepositoryBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMeta.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.ModelMeta">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.ModelMetaBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobal.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.MyGlobal">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.MyGlobalBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelper.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.DataHelper">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.DataHelperBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistema.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.LogSistema">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.LogSistemaBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.Notificacao.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.Notificacao">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.NotificacaoBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMeta.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.ModelMeta">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.ModelMetaBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobal.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.MyGlobal">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.MyGlobalBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBException.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.INBException">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.INBExceptionBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepository.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.IRepository">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.IRepositoryBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.Model.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.Model">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.ModelBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.ModelBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelper.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.DataHelper">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.DataHelperBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.DataHelperBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.Perfil.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.Perfil">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.PerfilBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.PerfilBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.PerfilBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.PerfilBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.PerfilBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.PerfilBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.PerfilBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.PerfilBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.PerfilBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.PerfilBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.Perfil.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.Perfil">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.PerfilBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.Model.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.Model">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.VB.ModelBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.ModelBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.VB.ModelBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.VB.ModelBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistema.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.LogSistema">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.LogSistemaBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.Notificacao.TransformText">
+	<summary>
+Create the template output
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.Notificacao">
+	<summary>
+Class to produce the template output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.GenerationEnvironment">
+	<summary>
+The string builder that generation-time code is using to assemble generated output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.Errors">
+	<summary>
+The error collection for the generation process
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.indentLengths">
+	<summary>
+A list of the lengths of each indent that was added with PushIndent
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.CurrentIndent">
+	<summary>
+Gets the current indent we use when adding lines to the output
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.Session">
+	<summary>
+Current transformation session
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.Write(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.WriteLine(System.String)">
+	<summary>
+Write text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.Write(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.WriteLine(System.String,System.Object[])">
+	<summary>
+Write formatted text directly into the generated output
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.Error(System.String)">
+	<summary>
+Raise an error
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.Warning(System.String)">
+	<summary>
+Raise a warning
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.PushIndent(System.String)">
+	<summary>
+Increase the indent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.PopIndent">
+	<summary>
+Remove the last indent that was added with PushIndent
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.ClearIndent">
+	<summary>
+Remove any indentation
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.ToStringInstanceHelper.FormatProvider">
+	<summary>
+Gets or sets format provider to be used by ToStringWithCulture method.
+</summary>
+</member><member name="M:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+	<summary>
+This is called from the compile/run appdomain to convert objects within an expression block to a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.ToStringInstanceHelper">
+	<summary>
+Utility class to produce culture-oriented representation of an object as a string.
+</summary>
+</member><member name="P:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase.ToStringHelper">
+	<summary>
+Helper to produce culture-oriented representation of an object as a string
+</summary>
+</member><member name="T:INB.CLASSWRITER.My.Templates.CSharp.NotificacaoBase">
+	<summary>
+Base class for this transformation
+</summary>
+</member>
+</members>
+</doc>

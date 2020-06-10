@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<ConfiguracaoFormularios>
+	<FrmPasso2>
+		<ChkClasses>True</ChkClasses>
+		<ChkCRUDModel>True</ChkCRUDModel>
+		<ChkControladora>True</ChkControladora>
+		<ChkXML>True</ChkXML>
+	</FrmPasso2>
+</ConfiguracaoFormularios>

@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="yes"?>
+<ConfiguracaoFormularios>
+  <FrmPasso3>
+    <TxtDiretorio>C:\Lixo\</TxtDiretorio>
+    <TxtPrefixo />
+    <ChkCaminhoPadrao>False</ChkCaminhoPadrao>
+  </FrmPasso3>
+</ConfiguracaoFormularios>

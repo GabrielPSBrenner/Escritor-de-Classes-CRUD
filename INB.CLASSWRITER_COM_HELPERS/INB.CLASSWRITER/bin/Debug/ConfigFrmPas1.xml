@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?>
+<ConfiguracaoFormularios>
+  <FrmPasso1>
+    <CboTipoConexao />
+    <TxtServidor>BDADOSSVR</TxtServidor>
+    <TxtBancoDados>LICTRAB2</TxtBancoDados>
+    <TxtUID>admlt2</TxtUID>
+    <TxtPWD>3at{*d</TxtPWD>
+  </FrmPasso1>
+</ConfiguracaoFormularios>

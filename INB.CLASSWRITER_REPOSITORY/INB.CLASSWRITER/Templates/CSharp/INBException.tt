@@ -1,0 +1,122 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <#=_Config.Namespace#>
+{
+	public class INBException : System.ApplicationException
+	{
+		private eError _Code;
+		
+
+		public eError Code
+		{
+			get { return _Code; }
+		}
+
+		public INBException(eError Code, Exception InnerException = null)
+			: this(Code, INBException.GetError(Code), InnerException)
+		{
+		}
+
+		public INBException(eError Code, string Message, Exception InnerException = null)
+			: base(Message, InnerException)
+		{
+			_Code = Code;
+		}
+
+		public INBException(string Message, Exception InnerException = null)
+			: this(eError.Custom, Message, InnerException)
+		{
+		}
+
+		public static string GetError(eError Type)
+		{
+			string Result = "";
+			switch (Type)
+			{
+				case eError.NotFound:
+					Result = "A operação não pode ser concluída. Registro não encontrado.";
+					break;
+				case eError.InsufficientParameters:
+					Result = "A operação não pode ser concluída. Parâmetros insuficientes.";
+					break;
+				case eError.UnableDelete:
+					Result = "Não foi possível excluir esse registro.";
+					break;
+				case eError.UnableDeleteRelationship:
+					Result = "A operação não pode ser concluída. É necessário antes que sejam excluídas suas dependências ou pode optar por desabilitá-lo.";
+					break;
+				case eError.TimeIntervalConflicted:
+					Result = "A data inicial não pode ser maior que a data final.";
+					break;
+				case eError.RecordTimeIntervalConflicted:
+					Result = "Já existe um registro cadastrado para o período informado.";
+					break;
+				case eError.AccessDeniedWeb:
+					Result = "Você não está autorizado a acessar esta página.";
+					break;
+				case eError.NotFoundWeb:
+					Result = "O arquivo requisitado não pode ser encontrado.";
+					break;
+				case eError.TimeOut:
+					Result = "O tempo de execução expirou.";
+					break;
+				case eError.InternalError:
+					Result = "Ocorreu um erro interno no servidor.";
+					break;
+				case eError.Custom:
+					Result = "";
+					break;
+
+			}
+			return Result;
+		}
+
+		public static INBException GetINBException(Exception ex)
+		{
+			INBException Result = null;
+
+			if ((ex) is INBException)
+			{
+				Result = (INBException)ex;
+			}
+			else
+			{
+				while ((ex.InnerException != null))
+				{
+					ex = ex.InnerException;
+					if ((ex) is INBException)
+					{
+						Result = (INBException)ex;
+						break; // TODO: might not be correct. Was : Exit While
+					}
+				}
+			}
+			return Result;
+		}
+
+		public static string GetEntityValidationError(System.Data.Entity.Validation.DbEntityValidationException ex)
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (var ItemEVE in ex.EntityValidationErrors)
+			{
+				foreach (var ItemVE in ItemEVE.ValidationErrors)
+				{
+					sb.AppendLine(ItemVE.ErrorMessage);
+				}
+
+			}
+			return sb.ToString();
+		}
+
+	}
+}

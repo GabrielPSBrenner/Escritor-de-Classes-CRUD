@@ -1,0 +1,107 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+Imports System.Collections.Generic
+Imports System.Linq
+Imports System.Text
+Imports System.Threading.Tasks
+
+
+Public Class INBException
+	Inherits System.ApplicationException
+	Private _Code As eError
+
+
+	Public ReadOnly Property Code() As eError
+		Get
+			Return _Code
+		End Get
+	End Property
+
+	Public Sub New(Code As eError, Optional InnerException As Exception = Nothing)
+		Me.New(Code, INBException.GetError(Code), InnerException)
+	End Sub
+
+	Public Sub New(Code As eError, Message As String, Optional InnerException As Exception = Nothing)
+		MyBase.New(Message, InnerException)
+		_Code = Code
+	End Sub
+
+	Public Sub New(Message As String, Optional InnerException As Exception = Nothing)
+		Me.New(eError.[Custom], Message, InnerException)
+	End Sub
+
+	Public Shared Function GetError(Type As eError) As String
+		Dim Result As String = ""
+		Select Case Type
+			Case eError.NotFound
+				Result = "A operação não pode ser concluída. Registro não encontrado."
+				Exit Select
+			Case eError.InsufficientParameters
+				Result = "A operação não pode ser concluída. Parâmetros insuficientes."
+				Exit Select
+			Case eError.UnableDelete
+				Result = "Não foi possível excluir esse registro."
+				Exit Select
+			Case eError.UnableDeleteRelationship
+				Result = "A operação não pode ser concluída. É necessário antes que sejam excluídas suas dependências ou pode optar por desabilitá-lo."
+				Exit Select
+			Case eError.TimeIntervalConflicted
+				Result = "A data inicial não pode ser maior que a data final."
+				Exit Select
+			Case eError.RecordTimeIntervalConflicted
+				Result = "Já existe um registro cadastrado para o período informado."
+				Exit Select
+			Case eError.AccessDeniedWeb
+				Result = "Você não está autorizado a acessar esta página."
+				Exit Select
+			Case eError.NotFoundWeb
+				Result = "O arquivo requisitado não pode ser encontrado."
+				Exit Select
+			Case eError.TimeOut
+				Result = "O tempo de execução expirou."
+				Exit Select
+			Case eError.InternalError
+				Result = "Ocorreu um erro interno no servidor."
+				Exit Select
+			Case eError.[Custom]
+				Result = ""
+				Exit Select
+
+		End Select
+		Return Result
+	End Function
+
+	Public Shared Function GetINBException(ex As Exception) As INBException
+		Dim Result As INBException = Nothing
+
+		If TypeOf (ex) Is INBException Then
+			Result = DirectCast(ex, INBException)
+		Else
+			While (ex.InnerException IsNot Nothing)
+				ex = ex.InnerException
+				If TypeOf (ex) Is INBException Then
+					Result = DirectCast(ex, INBException)
+					' TODO: might not be correct. Was : Exit While
+					Exit While
+				End If
+			End While
+		End If
+		Return Result
+	End Function
+
+	Public Shared Function GetEntityValidationError(ex As System.Data.Entity.Validation.DbEntityValidationException) As String
+		Dim sb As New StringBuilder()
+		For Each ItemEVE As var In ex.EntityValidationErrors
+			For Each ItemVE As var In ItemEVE.ValidationErrors
+				sb.AppendLine(ItemVE.ErrorMessage)
+
+			Next
+		Next
+		Return sb.ToString()
+	End Function
+
+End Class

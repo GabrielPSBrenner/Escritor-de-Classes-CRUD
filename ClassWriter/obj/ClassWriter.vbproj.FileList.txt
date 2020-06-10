@@ -1,0 +1,30 @@
+bin\ClassWriter.exe
+bin\ClassWriter.xml
+bin\LERESTRUTURA.dll
+bin\LERESTRUTURA.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\ClassWriter.controller.txt
+obj\Debug\ClassWriter.crudmodel.txt
+obj\Debug\ClassWriter.super.txt
+obj\Debug\ClassWriter.WinXPsetV3 Icon 10.ico
+obj\Debug\ClassWriter.FrmCriacao.resources
+obj\Debug\ClassWriter.FrmPasso1.resources
+obj\Debug\ClassWriter.FrmPasso2.resources
+obj\Debug\ClassWriter.FrmPasso3.resources
+obj\Debug\ClassWriter.vbproj.GenerateResource.Cache
+obj\Debug\ClassWriter.exe
+obj\Debug\ClassWriter.xml
+obj\Debug\ClassWriter.pdb
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\ClassWriter.controller.txt
+obj\Release\ClassWriter.crudmodel.txt
+obj\Release\ClassWriter.super.txt
+obj\Release\ClassWriter.WinXPsetV3 Icon 10.ico
+obj\Release\ClassWriter.FrmCriacao.resources
+obj\Release\ClassWriter.FrmPasso1.resources
+obj\Release\ClassWriter.FrmPasso2.resources
+obj\Release\ClassWriter.FrmPasso3.resources
+obj\Release\ClassWriter.vbproj.GenerateResource.Cache
+obj\Release\ClassWriter.exe
+obj\Release\ClassWriter.xml
+bin\ClassWriter.pdb

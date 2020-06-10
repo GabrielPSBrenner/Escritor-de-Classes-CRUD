@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?>
+<ConfiguracaoFormularios>
+  <FrmPasso1>
+    <CboTipoConexao />
+    <TxtServidor>BDADOSSVR</TxtServidor>
+    <TxtBancoDados>PRODVAR</TxtBancoDados>
+    <TxtUID>ADMPVAR</TxtUID>
+    <TxtPWD>xHg1z}L</TxtPWD>
+  </FrmPasso1>
+</ConfiguracaoFormularios>

@@ -1,0 +1,321 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <#=_Config.Namespace#>
+{
+
+	#region "Enums"
+
+	public enum eSistema
+	{
+		Generico = 12,
+		Corrente = <#=_Config.CodigoSistema#> //ALTERAR DE ACORDO COM O SISTEMA
+	}
+
+	public enum ePerfil
+	{
+		SemAcesso,
+		Desenvolvimento,
+		SimulaUsuario,
+		DefinePermissao,
+		Administrador
+
+		, PodeAcessar
+		, Gestor
+
+	}
+
+	public enum eComparacao
+	{
+		AND,
+		OR
+	}
+
+	public enum eError
+	{
+		NotFound,
+		InsufficientParameters,
+		UnableDelete,
+		UnableDeleteRelationship,
+		RecordTimeIntervalConflicted,
+		TimeIntervalConflicted,
+		AccessDeniedWeb,
+		NotFoundWeb,
+		TimeOut,
+		InternalError,
+		Custom
+	}
+
+	public enum eTipoLog
+	{
+		Login = 1,
+		Logoff = 2,
+		Insert = 3,
+		Update = 4,
+		Delete = 5,
+		Select = 6,
+	}
+
+	#endregion
+
+	class MyGlobal
+	{
+		private static bool? bolAmbienteReal = null;
+		public const int CodigoSistema = (int) eSistema.Corrente;
+
+		public static bool AmbienteReal
+		{
+			get
+			{
+				if (bolAmbienteReal == null)
+				{
+					try
+					{
+						AmbienteReal = !bool.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["AmbienteTeste"]);
+					}
+					catch (Exception ex)
+					{
+						AmbienteReal = false;
+					}
+				}
+				return (bool)bolAmbienteReal;
+			}
+			set
+			{
+				bolAmbienteReal = value;
+			}
+		}
+
+		public static int Matricula
+		{
+			get
+			{
+				int Result = 0;
+				try
+				{
+					if (System.Web.HttpContext.Current != null && System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.Name != null)
+					{
+						Result = int.Parse(System.Web.HttpContext.Current.User.Identity.Name);
+					}
+				}
+				catch (Exception ex)
+				{
+				}
+				return Result;
+			}
+		}
+
+		public static string NomeEstacao()
+		{
+			string Result;
+			try
+			{
+				try
+				{
+					var oIPHostName = System.Net.Dns.GetHostEntry(IP());
+					Result = oIPHostName.HostName;
+				}
+				catch (Exception ex2)
+				{
+					Result = Environment.MachineName;
+				}
+			}
+			catch (Exception ex1)
+			{
+				return "";
+			}
+			return Result;
+		}
+
+		public static string IP()
+		{
+			String Result = "";
+			try
+			{
+				try
+				{
+					if (System.Web.HttpContext.Current != null)
+						Result = GetIP4Address();
+					else
+					{
+						var oIPHostName = System.Net.Dns.GetHostEntry(Environment.MachineName);
+						System.Net.IPAddress[] IPAdd = oIPHostName.AddressList;
+
+						for (int i = 0; i < IPAdd.GetUpperBound(0); i++)
+						{
+							if (IPAdd[i].ToString().Substring(0, 2) == "10")
+							{
+								Result = IPAdd[i].ToString();
+								break;
+							}
+						}
+					}
+				}
+
+				catch (Exception ex2)
+				{
+					throw ex2;
+				}
+
+				return Result;
+			}
+			catch (Exception ex1)
+			{
+				return "";
+			}
+		}
+
+		public static System.Net.Mail.MailAddress EmailSistema
+		{
+			get
+			{
+				try
+				{
+					string Mail = ConfigurationManager.AppSettings["EmailSistema"];
+					string[] arrMail = null;
+					if (Mail.Contains(","))
+					{
+						arrMail = Mail.Split(',');
+						return new System.Net.Mail.MailAddress(arrMail[0], arrMail[1]);
+					}
+					return new System.Net.Mail.MailAddress(Mail);
+				}
+				catch (Exception ex)
+				{
+					var foo = ex;
+					return new System.Net.Mail.MailAddress("inbnet@inb.gov.br", "<#=_Config.NomeSistema#>");
+				}
+
+			}
+		}
+
+		public static System.Net.Mail.MailAddressCollection EmailErro
+		{
+			get
+			{
+				System.Net.Mail.MailAddressCollection arrEmails = new System.Net.Mail.MailAddressCollection();
+				try
+				{
+
+					//tenta enviar para o e-mail de quem está logado no sistema. Se o método foi chamado fora do ambiente web usará as 
+					//definições do EmailErro que pode incluir GERTIemailauto caso não nada tenha sido definido.
+					var p = (System.Web.HttpContext)System.Web.HttpContext.Current;
+					if (p != null) //busca usuário logado na página
+					{
+						int iLogin = 0;
+						if (int.TryParse(p.User.Identity.Name, out iLogin))
+						{
+							arrEmails.Add(INB.Correio.Funcoes.retornaEmail(iLogin).Address);
+						}
+					}
+					else
+					{
+						try
+						{
+							arrEmails.Add(INB.Correio.Funcoes.retornaEmail(Environment.UserName).Address); //busca usuário logado na máquina
+						}
+						catch (Exception ex2) { throw new INBException("Helper.EmailErro: E-mail não encontrado."); }
+					}
+
+
+				}
+				catch (Exception ex)
+				{
+					var foo = ex;
+					string cEmails = ConfigurationManager.AppSettings["EmailErro"]; //busca e-mails cadastrados no .config da aplicação
+					if (cEmails.Contains(","))
+					{
+						foreach (string Item in cEmails.Split(','))
+						{
+							arrEmails.Add(Item);
+						}
+					}
+					else
+					{
+						arrEmails.Add(cEmails);
+					}
+					arrEmails.Add("GERTIemailauto@inb.gov.br"); //nesse caso sempre inclui a caixa de e-mail automático
+				}
+				return arrEmails;
+			}
+		}
+
+		private static System.Net.Mail.MailAddressCollection GetDefaultErrorEmail()
+		{
+			System.Net.Mail.MailAddressCollection arrResult = new System.Net.Mail.MailAddressCollection();
+			string cEmails = ConfigurationManager.AppSettings["EmailErro"]; //busca e-mails cadastrados no .config da aplicação
+			if (cEmails.Contains(","))
+			{
+				foreach (string Item in cEmails.Split(','))
+				{
+					arrResult.Add(Item);
+				}
+			}
+			else
+			{
+				arrResult.Add(cEmails);
+			}
+			arrResult.Add("GERTIemailauto@inb.gov.br"); //nesse caso sempre inclui a caixa de e-mail automático
+			return arrResult;
+		}
+
+		public static bool IsTestEnvironment
+		{
+			get
+			{
+				string AmbienteTeste = ConfigurationManager.AppSettings["AmbienteTeste"];
+				bool IsTest = false;
+				if (string.IsNullOrEmpty(AmbienteTeste))
+				{
+					IsTest = true;
+				}
+				else
+				{
+					bool.TryParse(AmbienteTeste, out IsTest);
+				}
+				return IsTest;
+			}
+		}
+
+		#region "Private Methods"
+
+		private static string GetIP4Address()
+		{
+			string IP4Address = String.Empty;
+
+			foreach (System.Net.IPAddress IPA in System.Net.Dns.GetHostAddresses(System.Web.HttpContext.Current.Request.UserHostAddress))
+			{
+				if (IPA.AddressFamily.ToString() == "InterNetwork")
+				{
+					IP4Address = IPA.ToString();
+					break;
+				}
+			}
+
+			if (IP4Address != String.Empty)
+				return IP4Address;
+
+			foreach (System.Net.IPAddress IPA in System.Net.Dns.GetHostAddresses(System.Net.Dns.GetHostName()))
+			{
+				if (IPA.AddressFamily.ToString() == "InterNetwork")
+				{
+					IP4Address = IPA.ToString();
+					break;
+				}
+			}
+			return IP4Address;
+		}
+
+		#endregion
+	}
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?>
+<ConfiguracaoFormularios>
+  <FrmPasso1>
+    <CboTipoConexao />
+    <TxtServidor>BDADOSEXTRA</TxtServidor>
+    <TxtBancoDados>ORGPROCESSO </TxtBancoDados>
+    <TxtUID>AdmORGPRO</TxtUID>
+    <TxtPWD>!On+Q~T0</TxtPWD>
+  </FrmPasso1>
+</ConfiguracaoFormularios>

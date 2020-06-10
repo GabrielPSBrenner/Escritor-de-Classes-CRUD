@@ -1,0 +1,232 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+Imports System.Collections.Generic
+Imports System.Linq
+Imports System.Net.Mail
+Imports System.Text
+Imports System.Threading.Tasks
+
+Public Class Notificacao
+
+#Region "Methods Default"
+
+	Public Shared ReadOnly Property ModeloEmail() As INB.Correio.MailTemplate
+		Get
+			Dim MailTemplate As New INB.Correio.MailTemplate()
+			MailTemplate.Cabecalho = MyGlobal.EmailSistema.DisplayName + (If((MyGlobal.IsTestEnvironment), " - TESTE", ""))
+			MailTemplate.Rodape = "INB - Indústrias Nucleares do Brasil S.A."
+			MailTemplate.RodapeAlinhamento = INB.Correio.MailTemplate.eTextAlign.Center
+			'O caminho interno para testes é:
+			'http://sistemasteste.inbnet2.inb.gov.br/html/MailTemplate
+			MailTemplate.Caminho = "http://sistemas.inb.gov.br/MailTemplate/temp_07.htm"
+			MailTemplate.CaminhoImagem = "http://sistemas.inb.gov.br/MailTemplate/temp_07"
+			Try
+				MailTemplate.CarregarTemplate()
+				If String.IsNullOrWhiteSpace(MailTemplate.ArquivoConteudo) Then
+					Throw New Exception()
+					'carrega um template default
+				End If
+			Catch ex As Exception
+				'não faz nada com ex
+				'return null; //template não disponível
+				MailTemplate.ArquivoConteudo = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd'> <html xmlns='http://www.w3.org/1999/xhtml' lang='pt-br'> <head> <title>INB - Indústrias Nucleares do Brasil SA</title> <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' /> </head> <body> <!--Base URL(http://www.inb.gov.br/MailTemplate/temp_07/)--> <table width='100%' bgcolor='#ffffff'> <tr>  <td align='center'> <!--Content--> <table width='600' border=0> <tr>  <td width='119' height='52'>INB</td>  <td width='520'><p align='[!HeaderAlign!]'><font face='Arial' size='3' color='#000000'><b>[!Header!]</b></font></p></td> </tr> <tr>  <td colspan='2' height='4'>   <table width='100%' cellpadding='0' cellspacing='0'>    <tr><td bgcolor='#eeeeee' height='1'><img src='temp_07/dot.gif' width='1' height='1'/></td></tr>    <tr><td bgcolor='#ffffff' height='1'><img src='temp_07/dot.gif' width='1' height='1'/></td></tr>    <tr><td bgcolor='#eeeeee' height='1'><img src='temp_07/dot.gif' width='1' height='1'/></td></tr>   </table>  </td> </tr> <tr>  <td colspan='2'>   <br/>   <p align='left'><font face='Verdana' color='#000000' size='1'>[!Content!]</font></p>   <br/>  </td> </tr> <tr>  <td colspan='2'>   <p align='[!FooterAlign!]'><font face='Verdana' color='#000000' size='1'>[!Footer!]</font></p>  </td> </tr> <tr>  <td colspan='2' bgcolor='#e3e3e3' height='30'><img src='temp_07/dot.gif' width='1' height='1'/></td> </tr> </table> <!--End Content-->  </td> </tr> </table> </body> </html>"
+			End Try
+			Return MailTemplate
+		End Get
+	End Property
+
+	Public Shared Sub enviaNotificacao(Conta As Object, Assunto As String, Mensagem As String, Optional UsaTemplate As Boolean = True)
+		Try
+			Dim Email As New INB.Correio.Email()
+			Email.De = MyGlobal.EmailSistema
+			Email.Assunto = Assunto
+			Email.Corpo = Mensagem
+			If TypeOf (Conta) Is MailAddress Then
+				Email.Para.Add(Conta)
+			ElseIf TypeOf (Conta) Is MailAddressCollection Then
+				Email.Para.AddRange(DirectCast(Conta, MailAddressCollection))
+			ElseIf TypeOf (Conta) Is Integer Then
+				Email.Para.Add(INB.Correio.Funcoes.retornaEmail(CInt(Conta)))
+			Else
+				Email.Para.Add(INB.Correio.Funcoes.retornaEmail(DirectCast(Conta, String)))
+			End If
+			If UsaTemplate Then
+				Email.Template = ModeloEmail
+			End If
+			Email.Prioridade = System.Net.Mail.MailPriority.High
+			Email.Envia()
+		Catch ex As Exception
+			Throw New INBException("Falha ao enviar notificação", ex)
+		End Try
+
+	End Sub
+
+	Public Shared Sub NotificaErro(Mensagem As String, Optional pPerfil As Perfil = Nothing)
+		Dim appException As Exception = Nothing
+		Dim errMessage As New StringBuilder()
+
+		If (System.Web.HttpContext.Current IsNot Nothing) Then
+			appException = System.Web.HttpContext.Current.Server.GetLastError()
+		End If
+
+		errMessage.AppendLine("<style type='text/css'>")
+		errMessage.AppendLine(".UsuarioInfo {")
+		errMessage.AppendLine("border-spacing: 0;")
+		errMessage.AppendLine("background-color:#d7d7d7;")
+		errMessage.AppendLine("}")
+		errMessage.AppendLine(".UsuarioInfo td{")
+		errMessage.AppendLine("padding:5px;")
+		errMessage.AppendLine("}")
+		errMessage.AppendLine(".UsuarioInfo .Coluna1{")
+		errMessage.AppendLine("background-color:#808080;")
+		errMessage.AppendLine("}")
+		errMessage.AppendLine(".UsuarioInfo .Coluna1 font{")
+		errMessage.AppendLine(vbTab & "color:#fff;")
+		errMessage.AppendLine("}")
+		errMessage.AppendLine(".UsuarioInfo .StackTrace .Coluna2{")
+		errMessage.AppendLine("background-color:#c5f7bf;")
+		errMessage.AppendLine("}")
+		errMessage.AppendLine("</style>")
+		errMessage.AppendLine((Convert.ToString("Mensagem: ") & Mensagem) + "<br><br>")
+
+
+		Notificacao.IniciaTabela(errMessage)
+		Notificacao.InsereDebugHeader(errMessage, DirectCast(System.Web.HttpContext.Current, System.Web.HttpContext))
+
+		If pPerfil IsNot Nothing Then
+			Dim cTipo As String = ""
+			Select Case pPerfil.Tipo
+				Case INB.Procurase.Pessoa.eTipoPessoa.Contratado
+					cTipo = "Terceirizado"
+					Exit Select
+				Case INB.Procurase.Pessoa.eTipoPessoa.Empregado
+					cTipo = "Empregado"
+					Exit Select
+				Case INB.Procurase.Pessoa.eTipoPessoa.Estagiario
+					cTipo = "Estagiário"
+					Exit Select
+				Case INB.Procurase.Pessoa.eTipoPessoa.Visitante, INB.Procurase.Pessoa.eTipoPessoa.NaoDefinido
+					'Não deveria estar tentando acessar um sistema com essa identificação
+					cTipo = "Usuário inválido"
+					Exit Select
+			End Select
+			InsereLinha(errMessage, "Tipo", cTipo)
+
+			Dim cPerfil As String = ""
+			For Each Item As INB.Procurase.Pessoa.eTipoEmpregado In pPerfil.ListaTipoEmpregado
+				cPerfil += Item.ToString() + ","
+			Next
+
+			If String.IsNullOrWhiteSpace(cPerfil) = False Then
+				cPerfil = cPerfil.Substring(0, cPerfil.Length - 1)
+			End If
+
+			InsereLinha(errMessage, "Perfil", cPerfil)
+			InsereLinha(errMessage, "Matrícula", pPerfil.Matricula.ToString())
+			InsereLinha(errMessage, "Nome", pPerfil.Nome)
+			InsereLinha(errMessage, "Nome AD", pPerfil.NomeAd)
+			InsereLinha(errMessage, "E-mail", pPerfil.Email)
+			InsereLinha(errMessage, "Ramal", pPerfil.Ramais)
+			InsereLinha(errMessage, "Centro Custo", pPerfil.CentroCusto)
+			InsereLinha(errMessage, "Lotação", pPerfil.Lotacao)
+			InsereLinha(errMessage, "Local de Trabalho", pPerfil.LocalTrabalho)
+			InsereLinha(errMessage, "Empresa", pPerfil.Empresa)
+			InsereLinha(errMessage, "Local", pPerfil.Local)
+
+
+			If pPerfil.Situacao = INB.Procurase.Pessoa.eTipoSituacao.Ferias Then
+				InsereLinha(errMessage, "Férias", pPerfil.DataFeriasInicio.ToShortDateString() + " à " + pPerfil.DataFeriasFim.ToShortDateString())
+			Else
+				InsereLinha(errMessage, "Status", If(pPerfil.Situacao = INB.Procurase.Pessoa.eTipoSituacao.Ativo, "Ativo", "Inativo"))
+
+			End If
+		End If
+		If TypeOf appException Is System.Data.Entity.Validation.DbEntityValidationException Then
+			Dim ErrorMessage As String = INBException.GetEntityValidationError(DirectCast(appException, System.Data.Entity.Validation.DbEntityValidationException))
+			Notificacao.InsereLinha(errMessage, "Mensagem", (Convert.ToString("<div style='width:400px;overflow:auto'>") & ErrorMessage) + "</div>")
+		ElseIf (appException IsNot Nothing) Then
+			Notificacao.InsereLinha(errMessage, "Stack Trace", "<div style='width:400px;overflow:auto'>" + appException.StackTrace + "</div>", "StackTrace")
+
+			While (appException.InnerException IsNot Nothing)
+				Notificacao.InsereLinha(errMessage, "Mensagem", "<div style='width:400px;overflow:auto'>" + appException.InnerException.Message + "</div>")
+				Notificacao.InsereLinha(errMessage, "Stack Trace", "<div style='width:400px;overflow:auto'>" + appException.InnerException.StackTrace + "</div>", "StackTrace")
+				appException = appException.InnerException
+			End While
+
+			System.Web.HttpContext.Current.Server.ClearError()
+		End If
+		Notificacao.FechaTabela(errMessage)
+
+		Notificacao.enviaNotificacao(MyGlobal.EmailErro, "Erro na Aplicação", errMessage.ToString())
+	End Sub
+
+
+	Public Shared Sub NotificaAdmin(Mensagem As String)
+		Dim sb As New System.Text.StringBuilder()
+
+		sb.AppendLine((Convert.ToString("Mensagem: ") & Mensagem) + "<br><br>")
+
+		Notificacao.IniciaTabela(sb)
+		Notificacao.InsereDebugHeader(sb, System.Web.HttpContext.Current)
+		Notificacao.FechaTabela(sb)
+
+		Notificacao.enviaNotificacao(MyGlobal.EmailErro, "Admin", sb.ToString())
+	End Sub
+
+	Public Shared Sub NotificaParametros(ParamArray args As Object())
+		Dim s As New StringBuilder()
+
+		For Each Item As Object In args
+			s.Append(DirectCast(Item.ToString(), String) & Convert.ToString(", "))
+		Next
+		NotificaAdmin(s.ToString())
+	End Sub
+
+	Public Shared Sub InsereDebugHeader(ByRef f As StringBuilder, p As System.Web.HttpContext)
+		InsereLinha(f, "Máquina", Environment.MachineName)
+		If (p IsNot Nothing) Then
+			InsereLinha(f, "Host", p.Request.ServerVariables("Server_Name"))
+			InsereLinha(f, "URL", p.Request.ServerVariables("Script_Name"))
+			InsereLinha(f, "Horário", System.DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"))
+			InsereLinha(f, "Usuário logado", p.User.Identity.Name)
+			InsereLinha(f, "IP", p.Request.UserHostName)
+			InsereLinha(f, "Navegador", p.Request.UserAgent)
+		End If
+	End Sub
+
+	Public Shared Sub IniciaTabela(ByRef f As StringBuilder)
+		f.AppendLine("<table width='790' class=""UsuarioInfo"" cellspacing=""0"">")
+	End Sub
+	Public Shared Sub InsereLinha(f As StringBuilder, NomeCampo As String, Valor As String)
+		InsereLinha(f, NomeCampo, Valor, "")
+	End Sub
+	Public Shared Sub InsereLinha(f As StringBuilder, NomeCampo As String, Valor As String, ClassName As String)
+		If String.IsNullOrWhiteSpace(ClassName) Then
+			f.AppendLine("<tr>")
+		Else
+			f.AppendLine((Convert.ToString("<tr class=") & ClassName) + ">")
+		End If
+
+		f.AppendLine(String.Format("<td align='right' width='120' valign='top' class=""Coluna1""><font face='Verdana' size='1' style='font-size:11px' color='#000000'>{0}:</font></td>", NomeCampo))
+		If Valor Is Nothing Then
+			Valor = ""
+		End If
+		f.AppendLine(String.Format("<td valign='top' width='670' class=""Coluna2""><font face='Verdana' size='1' style='font-size:11px' color='#000000'>{0}</font></td>", Valor.Replace(vbLf, "<br />")))
+		f.AppendLine("</tr>")
+	End Sub
+	Public Shared Sub FechaTabela(ByRef f As StringBuilder)
+		f.AppendLine("</table>")
+	End Sub
+
+#End Region
+
+#Region "Methods Custom"
+
+
+#End Region
+
+End Class

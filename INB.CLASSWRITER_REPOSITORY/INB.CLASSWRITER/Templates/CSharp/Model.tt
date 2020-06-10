@@ -1,0 +1,104 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <#=_Config.Namespace#>
+{
+
+	public partial class <#=_Tabela.Nome#>
+	{
+
+<#If _Tabela.Tipo = LERESTRUTURA.TABLE.eTable.Table Then#>
+		#region "Methods Insert, Update Delete"
+
+		public static void Incluir(<#=_Tabela.Nome#> Registro<#=_Config.IdentificacaoUsuarioParam#>)
+		{
+			using (DM_<#=_Config.DataContextName#>Container db = DataHelper.GetDataContext<#=_Config.DataContextName#>())
+			{
+				db.<#=_Tabela.Nome#>.Add(Registro);
+				db.SaveChanges();
+<#If _Config.GeraLog() Then#>
+				LogSistema.Registra(eTipoLog.Insert, <#=_Config.IdentificacaoUsuarioLog#>, Registro);
+<#End If#>
+			}
+		}
+
+		public static void Alterar(<#=_Tabela.Nome#> Registro<#=_Config.IdentificacaoUsuarioParam#>)
+		{
+			using (DM_<#=_Config.DataContextName#>Container db = DataHelper.GetDataContext<#=_Config.DataContextName#>())
+			{
+				db.Entry(Registro).State = System.Data.Entity.EntityState.Modified;
+				db.SaveChanges();
+<#If _Config.GeraLog() Then#>
+				LogSistema.Registra(eTipoLog.Update, <#=_Config.IdentificacaoUsuarioLog#>, Registro);
+<#End If#>
+			}
+		}
+
+		public static void Excluir(<#=_Tabela.Nome#> Registro<#=_Config.IdentificacaoUsuarioParam#>)
+		{
+			using (DM_<#=_Config.DataContextName#>Container db = DataHelper.GetDataContext<#=_Config.DataContextName#>())
+			{
+				db.Entry(Registro).State = System.Data.Entity.EntityState.Deleted;
+				db.SaveChanges();
+				LogSistema.RegistraExcluirSerializa(<#=_Config.IdentificacaoUsuarioLog#>, Registro);
+			}
+		}
+
+		public static void Excluir(<#=_Config.GetParamPK(_Tabela)#><#=_Config.IdentificacaoUsuarioParam#>)
+		{
+			using (DM_<#=_Config.DataContextName#>Container db = DataHelper.GetDataContext<#=_Config.DataContextName#>())
+			{
+				<#=_Tabela.Nome#> Registro = new <#=_Tabela.Nome#>();
+				<#=_Config.GetQueryPKDelete(_Tabela)#>
+				db.Entry(Registro).State = System.Data.Entity.EntityState.Deleted;
+				db.SaveChanges();
+<#If _Config.GeraLog() Then#>
+				LogSistema.RegistraExcluir(<#=_Config.IdentificacaoUsuarioLog#>, Registro, "Parâmetros: <#=_Config.GetQueryPK(_Tabela)#>");
+<#End If#>
+			}
+		}
+
+		#endregion
+
+<#End If 'Termina verificação do tipo de objeto#>
+		
+		#region "Methods Select"
+
+		public static List<<#=_Tabela.Nome#>> SelecionarTodos(<#=_Config.IdentificacaoUsuarioParam.Replace(",","").Trim()#>)
+		{
+			using (DM_<#=_Config.DataContextName#>Container db = DataHelper.GetDataContext<#=_Config.DataContextName#>())
+			{
+				List<<#=_Tabela.Nome#>> arrResult = (from p in db.<#=_Tabela.Nome#> select p).ToList();
+<#If _Config.TipoLog = Configuracao.eLog.Tudo Then#>
+                LogSistema.Registra(eTipoLog.Select, <#=_Config.IdentificacaoUsuarioLog#>, typeof(<#=_Tabela.Nome#>), "SelecionarTodos()");
+<#End If#>
+				return arrResult;
+			}
+		}
+
+		public static <#=_Tabela.Nome#> Selecionar(<#=_Config.GetParamPK(_Tabela)#><#=_Config.IdentificacaoUsuarioParam#>)
+		{
+			using (DM_<#=_Config.DataContextName#>Container db = DataHelper.GetDataContext<#=_Config.DataContextName#>())
+			{
+				<#=_Tabela.Nome#> Result = (from p in db.<#=_Tabela.Nome#> <#=_Config.GetQueryPK(_Tabela)#> select p).FirstOrDefault();
+<#If _Config.TipoLog = Configuracao.eLog.Tudo Then#>
+                LogSistema.Registra(eTipoLog.Select, <#=_Config.IdentificacaoUsuarioLog#>, typeof(<#=_Tabela.Nome#>), "Selecionar()", "<#=_Config.GetParamPK(_Tabela)#>");
+<#End If#>
+				return Result;
+			}
+		}
+
+		#endregion
+
+	}
+}

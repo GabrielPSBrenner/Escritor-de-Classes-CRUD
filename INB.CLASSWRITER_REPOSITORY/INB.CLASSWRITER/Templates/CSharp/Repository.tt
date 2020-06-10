@@ -1,0 +1,51 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using INB.Infra.Data.Interfaces;
+using INB.Infra.Data;
+
+namespace <#=_Config.Namespace#>.Repositories
+{
+    public class Repository<#=_Tabela.Nome#> : RepositoryBase<<#=_Tabela.Nome#>, <#=_Config.DataContextName#>, T_LOG>, Interfaces.IRepository<#=_Tabela.Nome#>, IDisposable
+    {
+         private bool _RecebeuDataContext;
+
+        public Repository<#=_Tabela.Nome#>(<#=_Config.DataContextName#> DataContext, bool SubmitSaveChanges = true)
+            : base(DataContext, SubmitSaveChanges)
+        {
+             _RecebeuDataContext = true;
+        }
+
+        public Repository<#=_Tabela.Nome#>(bool SubmitSaveChanges = true)
+            : base(Helper.DataHelper.GetDataContext(), SubmitSaveChanges)
+        {            
+            _RecebeuDataContext = false;
+        }
+
+        public Repository<#=_Tabela.Nome#>(<#=_Config.DataContextName#> DataContext, IIdentification UserIdentification, bool SubmitSaveChanges = true)
+            : base(DataContext, UserIdentification, SubmitSaveChanges)
+        {           
+            _RecebeuDataContext = true;          
+        }
+
+        public Repository<#=_Tabela.Nome#>(IIdentification UserIdentification, bool SubmitSaveChanges = true, bool IgnoreLog = false)
+            : base(Helper.DataHelper.GetDataContext(), UserIdentification, SubmitSaveChanges, IgnoreLog)
+        {          
+            _RecebeuDataContext = false;
+        }
+
+        public void Dispose()
+        {
+            if (!_RecebeuDataContext)
+                DataContext.Dispose();
+        }
+    }
+}

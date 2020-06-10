@@ -1,0 +1,16 @@
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.exe
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.xml
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.pdb
+C:\Projetos\CLASSWRITER_NEW\bin\ClassWriter.exe
+C:\Projetos\CLASSWRITER_NEW\bin\ClassWriter.pdb
+C:\Projetos\CLASSWRITER_NEW\bin\ClassWriter.xml
+C:\Projetos\CLASSWRITER_NEW\bin\LERESTRUTURA.dll
+C:\Projetos\CLASSWRITER_NEW\bin\LERESTRUTURA.pdb
+C:\Projetos\CLASSWRITER_NEW\bin\LERESTRUTURA.xml
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ResolveAssemblyReference.cache
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.FrmConfProcedure.resources
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.FrmCriacao.resources
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.FrmPasso1.resources
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.FrmPasso2.resources
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.FrmPasso3.resources
+C:\Projetos\CLASSWRITER_NEW\obj\Debug\ClassWriter.vbproj.GenerateResource.Cache

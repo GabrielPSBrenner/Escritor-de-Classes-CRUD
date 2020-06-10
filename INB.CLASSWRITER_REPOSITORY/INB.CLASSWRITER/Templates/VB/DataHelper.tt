@@ -1,0 +1,163 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+
+Imports System.Configuration
+Imports System.Data.Entity
+Imports System.Data.Entity.Core.EntityClient
+Imports System.Reflection
+Imports System.Linq
+Imports System.Data.SqlClient
+
+
+Public Class DataHelper
+
+	Public Enum eDatabase
+		SCPPP
+	End Enum
+
+	Private Shared Function GetModelName(Database As eDatabase) As String
+		Select Case Database
+			Case eDatabase.SCPPP
+				Return "cn<#=_Config.DataContextName#>"
+		End Select
+		Return ""
+	End Function
+
+	Public Shared Function GetConnectionString(Database As eDatabase) As String
+		Dim Key As String = ""
+
+		Select Case Database
+			Case eDatabase.<#=_Config.DataContextName#>
+				Key = "cn<#=_Config.DataContextName#>"
+		End Select
+
+		If MyGlobal.IsTestEnvironment Then
+			Key += If((ConfigurationManager.ConnectionStrings(Key & Convert.ToString("Teste")) IsNot Nothing), "Teste", "")
+		End If
+
+		Return ConfigurationManager.ConnectionStrings(Key).ConnectionString
+	End Function
+
+	Private Shared Function GetDataContext(Database As eDatabase, Optional MyDb As System.Data.Entity.DbContext = Nothing) As System.Data.Entity.DbContext
+		If MyDb IsNot Nothing Then
+			Return MyDb
+		End If
+		Dim Result As DbContext = Nothing
+		Select Case Database
+			Case eDatabase.<#=_Config.DataContextName#>
+				Result = New INB.SCPPP.Model.DM_<#=_Config.DataContextName#>Container()
+		End Select
+
+
+		Result.Database.Connection.ConnectionString = GetConnectionString(Database)
+		Result.Database.CommandTimeout = 1200
+		Result.Configuration.ProxyCreationEnabled = False
+		Return Result
+	End Function
+
+	Public Shared Function GetDataContextSCPPP(Optional MyDb As System.Data.Entity.DbContext = Nothing) As <#=_Config.Namespace#>.DM_<#=_Config.DataContextName#>Container
+		Return DirectCast(GetDataContext(eDatabase.<#=_Config.DataContextName#>, MyDb), <#=_Config.Namespace#>.DM_<#=_Config.DataContextName#>Container)
+	End Function
+
+#Region "Other Methods"
+
+	Public Shared Function GetSqlCommand(connection As SqlConnection) As SqlCommand
+		Dim Result = connection.CreateCommand()
+
+		Result.CommandTimeout = connection.ConnectionTimeout
+
+		Return Result
+	End Function
+
+	Public Shared Sub ReflectObject(Target As [Object], Source As [Object])
+		If Source Is Nothing Or Target Is Nothing Then
+			Return
+		End If
+		Dim Flags As BindingFlags = BindingFlags.IgnoreCase Or BindingFlags.Instance Or BindingFlags.[Public] Or BindingFlags.NonPublic
+		Dim arrPropertiesSource As PropertyInfo() = Source.[GetType]().GetProperties(Flags)
+
+		'Procura em cada propriedade do Source uma propriedade 
+		'correspondente em Target
+		For Each Item As PropertyInfo In arrPropertiesSource
+			Dim oProperty As PropertyInfo = Target.[GetType]().GetProperty(Item.Name)
+			'Verifica se a propriedade existe no destino
+			If oProperty Is Nothing Then
+				Continue For
+			End If
+			'Verifica se é um tipo válido
+			If Not (oProperty.PropertyType.IsPrimitive Or oProperty.PropertyType.IsArray Or oProperty.PropertyType.IsSerializable Or Object.ReferenceEquals(oProperty.PropertyType, GetType(System.DateTime)) Or Object.ReferenceEquals(oProperty.PropertyType, GetType(System.Nullable(Of System.DateTime)))) Then
+				Continue For
+			End If
+
+			'Armazena o valor do destino para uma avaliação: evitar que se tente gravar dados nessa propriedade. O linq gera erro quando tem valor.
+			Dim oValueTarget As Object = oProperty.GetValue(Target, Nothing)
+
+			'Busca a propriedade na fonte
+			oProperty = Source.[GetType]().GetProperty(Item.Name, Flags)
+			If oProperty Is Nothing Then
+				Continue For
+			End If
+
+			Dim oValue As Object = oProperty.GetValue(Source, Nothing)
+			Dim IsPK As Boolean = False
+			oProperty = Target.[GetType]().GetProperty(Item.Name, Flags)
+			If Object.ReferenceEquals(oProperty.PropertyType, GetType(System.Data.Linq.Mapping.ColumnAttribute)) Then
+				IsPK = IsPrimaryKey(Source, oProperty.Name)
+			End If
+			'Não atualiza
+			If IsPK And HasValue(oValueTarget) Then
+			Else
+				If oProperty.CanWrite Then
+					oProperty.SetValue(Target, oValue, Nothing)
+				End If
+			End If
+		Next
+	End Sub
+
+	Private Shared Function HasValue(Source As Object) As Boolean
+		'Somente para campos chave primaria
+		Dim Result As Boolean = False
+		If TypeOf (Source) Is Integer Or TypeOf (Source) Is Long Or TypeOf (Source) Is Double Then
+			Dim val As Double = 0
+			Double.TryParse(Source.ToString(), val)
+			If val > 0 Then
+				Result = True
+			End If
+		ElseIf TypeOf (Source) Is String Then
+			Dim val As String = DirectCast(Source, String)
+			Result = String.IsNullOrEmpty(val)
+		End If
+		Return Result
+	End Function
+
+	Public Shared Function GetPrimaryKey(Source As Object) As PropertyInfo
+		Dim infos As PropertyInfo() = Source.[GetType]().GetProperties()
+		Dim PKProperty As PropertyInfo = Nothing
+		For Each info As PropertyInfo In infos
+			Dim column = info.GetCustomAttributes(False).Where(Function(x) x.[GetType]() = GetType(System.Data.Linq.Mapping.ColumnAttribute)).FirstOrDefault(Function(x) (DirectCast(x, System.Data.Linq.Mapping.ColumnAttribute).IsPrimaryKey AndAlso DirectCast(x, System.Data.Linq.Mapping.ColumnAttribute).DbType.Contains("NOT NULL")))
+			If column IsNot Nothing Then
+				PKProperty = info
+				' TODO: might not be correct. Was : Exit For
+				Exit For
+			End If
+		Next
+		Return PKProperty
+	End Function
+
+	Public Shared Function IsPrimaryKey(Source As Object, PropertyName As String) As Boolean
+		Dim PropAux As PropertyInfo = GetPrimaryKey(Source)
+		If PropAux IsNot Nothing AndAlso PropAux.Name.Equals(PropertyName, StringComparison.InvariantCultureIgnoreCase) Then
+			Return True
+		End If
+		Return False
+	End Function
+
+#End Region
+
+End Class
+
+

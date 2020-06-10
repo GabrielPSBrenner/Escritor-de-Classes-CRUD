@@ -1,0 +1,99 @@
+Public MustInherit Class CRUDModel
+  Inherits Super
+  
+  Public Sub Insert()
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      lPersisteDados.Insert(Me)
+   End Sub
+
+   Public Sub Update()
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      lPersisteDados.Update(Me)
+   End Sub
+
+   Public Sub Delete()
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      lPersisteDados.Delete(Me)
+   End Sub
+
+
+   Public Function ObjReturnPk() As Object
+      Dim obj As Object
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      obj = lPersisteDados.ObjectReturnPk(Me)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return obj
+   End Function
+
+   Public Function ObjectsReturn(Optional ByVal Order As String = "") As ArrayList
+      Dim oArray As ArrayList
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      oArray = lPersisteDados.ObjectsReturn(Me, Order)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return oArray
+   End Function
+
+   Public Function AllObjects(Optional ByVal Order As String = "") As ArrayList
+      Dim oArray As ArrayList
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      oArray = lPersisteDados.AllObjects(Me, Order)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return oArray
+   End Function
+
+   Public Function SingleObjects(ByRef Criteria As PersisteDados.ClsCriteria, Optional ByVal Order As String = "") As ArrayList
+      Dim oArray As ArrayList
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      oArray = lPersisteDados.SingleObjects(Me, Criteria, Order)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return oArray
+   End Function
+
+   Public Function NextNumber(ByVal PropertyName As String)
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      Dim Number As Long
+      Number = lPersisteDados.NextSingleKeyNumber(Me, PropertyName)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return Number
+   End Function
+
+   Public Overridable Sub lPersisteDados_AfterDelete(ByVal Success As Boolean, ByVal Err As System.Exception) Handles lPersisteDados.AfterDelete
+   End Sub
+
+   Public Overridable Sub lPersisteDados_BeforeDelete(ByRef Cancel As Boolean) Handles lPersisteDados.BeforeDelete
+   End Sub
+
+   Public Overridable Sub lPersisteDados_AfterInsert(ByVal Success As Boolean, ByVal Err As System.Exception) Handles lPersisteDados.AfterInsert
+   End Sub
+
+   Public Overridable Sub lPersisteDados_BeforeInsert(ByRef Cancel As Boolean) Handles lPersisteDados.BeforeInsert
+   End Sub
+
+   Public Overridable Sub lPersisteDados_AfterUpdate(ByVal Success As Boolean, ByVal Err As System.Exception) Handles lPersisteDados.AfterUpdate
+   End Sub
+
+   Public Overridable Sub lPersisteDados_BeforeUpdate(ByRef Cancel As Boolean) Handles lPersisteDados.BeforeUpdate
+   End Sub
+   
+End Class

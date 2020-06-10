@@ -1,0 +1,48 @@
+Public MustInherit Class VIEWModel
+  Inherits Super
+  
+   Public Function ObjReturnPk() As Object
+      Dim obj As Object
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      obj = lPersisteDados.ObjectReturnPk(Me)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return obj
+   End Function
+
+   Public Function ObjectsReturn(Optional ByVal Order As String = "") As ArrayList
+      Dim oArray As ArrayList
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      oArray = lPersisteDados.ObjectsReturn(Me, Order)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return oArray
+   End Function
+
+   Public Function AllObjects(Optional ByVal Order As String = "") As ArrayList
+      Dim oArray As ArrayList
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      oArray = lPersisteDados.AllObjects(Me, Order)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return oArray
+   End Function
+
+   Public Function SingleObjects(ByRef Criteria As PersisteDados.ClsCriteria, Optional ByVal Order As String = "") As ArrayList
+      Dim oArray As ArrayList
+      If IsNothing(lPersisteDados) Then
+         lPersisteDados = New PersisteDados.ClsPersiste(MyBase.PathXML)
+      End If
+      oArray = lPersisteDados.SingleObjects(Me, Criteria, Order)
+      lPersisteDados.Dispose()
+      lPersisteDados = Nothing
+      Return oArray
+   End Function
+   
+End Class

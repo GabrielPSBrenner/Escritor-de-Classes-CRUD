@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{70978920-4E70-4091-A239-9E44501C9291}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>INB.CLASSWRITER.My.MyApplication</StartupObject>
+    <RootNamespace>INB.CLASSWRITER</RootNamespace>
+    <AssemblyName>INB.CLASSWRITER</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>INB.CLASSWRITER.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>INB.CLASSWRITER.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="INB.CONSEG.BASECLASS, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0968f0f7c342ae3d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Componentes\INB.CONSEG.BASECLASS.dll</HintPath>
+    </Reference>
+    <Reference Include="INB.CONSEG.REGRASNEGOCIO, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0035805c63b6c4df, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Componentes\INB.CONSEG.REGRASNEGOCIO.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmCriacao.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPasso1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPasso2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPasso3.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Global.vb" />
+    <Compile Include="Helpers\Placeholder.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Templates\Configuracao.vb" />
+    <Compile Include="Templates\CSharp\DataHelper.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataHelper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\CSharp\INBException.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>INBException.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\CSharp\LogSistema.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogSistema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\CSharp\Model.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\CSharp\ModelMeta.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMeta.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\CSharp\MyGlobal.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyGlobal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\CSharp\Notificacao.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notificacao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\DataHelper.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\INBException.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\LogSistema.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\Model.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\ModelMeta.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\MyGlobal.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\Notificacao.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Partials\Perfil.vb">
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\CSharp\Perfil.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Perfil.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\DataHelper.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataHelper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\INBException.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>INBException.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\LogSistema.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogSistema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\Model.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\ModelMeta.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMeta.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\MyGlobal.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyGlobal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\Notificacao.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notificacao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\VB\Partials\DataHelper.vb">
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\VB\Partials\Model.vb">
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\VB\Partials\ModelMeta.vb">
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\VB\Partials\MyGlobal.vb">
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Templates\VB\Perfil.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Perfil.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmCriacao.resx">
+      <DependentUpon>FrmCriacao.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPasso1.resx">
+      <DependentUpon>FrmPasso1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPasso2.resx">
+      <DependentUpon>FrmPasso2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPasso3.resx">
+      <DependentUpon>FrmPasso3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="Templates\CSharp\DataHelper.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>DataHelper.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\CSharp\INBException.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>INBException.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\CSharp\LogSistema.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>LogSistema.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\CSharp\Model.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>Model.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\CSharp\ModelMeta.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>ModelMeta.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\CSharp\MyGlobal.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>MyGlobal.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\CSharp\Notificacao.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>Notificacao.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\CSharp\Perfil.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.CSharp</CustomToolNamespace>
+      <LastGenOutput>Perfil.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\DataHelper.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>DataHelper.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\INBException.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>INBException.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\LogSistema.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>LogSistema.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\Model.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>Model.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\ModelMeta.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>ModelMeta.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\MyGlobal.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>MyGlobal.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\Notificacao.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>Notificacao.vb</LastGenOutput>
+    </None>
+    <None Include="Templates\VB\Perfil.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>My.Templates.VB</CustomToolNamespace>
+      <LastGenOutput>Perfil.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LERESTRUTURA\LERESTRUTURA.vbproj">
+      <Project>{e97db835-ef45-4a00-a42b-bad542eec69e}</Project>
+      <Name>LERESTRUTURA</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConfigFrmPas1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ConfigFrmPas3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

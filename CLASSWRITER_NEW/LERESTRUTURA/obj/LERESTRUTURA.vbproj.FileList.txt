@@ -1,0 +1,7 @@
+bin\LERESTRUTURA.dll
+bin\LERESTRUTURA.pdb
+bin\LERESTRUTURA.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\LERESTRUTURA.dll
+obj\Debug\LERESTRUTURA.xml
+obj\Debug\LERESTRUTURA.pdb

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="ClassWriter">
+</Property><Property Name="Solution File" Value="C:\Projetos\CLASSWRITER_NEW\ClassWriter.sln">
+</Property><Property Name="User Options File" Value="C:\Projetos\CLASSWRITER_NEW\ClassWriter.suo">
+</Property><Property Name="Date" Value="terça-feira, 6 de setembro de 2011">
+</Property><Property Name="Time" Value="08:46">
+</Property><Property Name="Log Number" Value="2">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="ClassWriter.sln" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\ClassWriter.sln">
+</Event><Event ErrorLevel="0" Project="" Source="ClassWriter.suo" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\ClassWriter.suo">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ClassWriter.vbproj" Description="Project file successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\ClassWriter.vbproj">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ClassWriter.vbproj.user" Description="Project user file successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\ClassWriter.vbproj.user">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="AssemblyInfo.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\AssemblyInfo.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmConfProcedure.Designer.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmConfProcedure.Designer.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmConfProcedure.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmConfProcedure.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmCriacao.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmCriacao.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmPasso1.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmPasso1.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmPasso2.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmPasso2.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmPasso3.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmPasso3.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="Global.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\Global.vb">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ConfigFrmPas1.xml" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\ConfigFrmPas1.xml">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ConfigFrmPas2.xml" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\ConfigFrmPas2.xml">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ConfigFrmPas3.xml" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\ConfigFrmPas3.xml">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="viewmodel.txt" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\viewmodel.txt">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="controller.txt" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\controller.txt">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="crudmodel.txt" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\crudmodel.txt">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmConfProcedure.resx" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmConfProcedure.resx">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmCriacao.resx" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmCriacao.resx">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmPasso1.resx" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmPasso1.resx">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmPasso2.resx" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmPasso2.resx">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="FrmPasso3.resx" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\FrmPasso3.resx">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="super.txt" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\super.txt">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="WinXPsetV3 Icon 10.ico" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\WinXPsetV3 Icon 10.ico">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ClassWriter.vbproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="ClassWriter" Source="ClassWriter.vbproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj" Description="Project file successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\LERESTRUTURA\LERESTRUTURA.vbproj">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj.user" Description="Project user file successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\LERESTRUTURA\LERESTRUTURA.vbproj.user">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\AssemblyInfo.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\LERESTRUTURA\AssemblyInfo.vb">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\ChaveEstrangeira.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\LERESTRUTURA\ChaveEstrangeira.vb">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\DATABASE.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\LERESTRUTURA\DATABASE.vb">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\TABLE.vb" Description="File successfully backed up as C:\Projetos\CLASSWRITER_NEW\Backup\LERESTRUTURA\TABLE.vb">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="ClassWriter.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="ClassWriter.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ClassWriter.vbproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

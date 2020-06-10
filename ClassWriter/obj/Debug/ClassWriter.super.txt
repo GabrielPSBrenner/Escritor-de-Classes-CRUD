@@ -1,0 +1,41 @@
+Imports System.Web.HttpContext
+
+Module gGlobal
+   Private _Path As String = ""
+   
+   Public Function Path() As String
+      If _Path.Trim = "" Then
+         _Path = Current.Server.MapPath("Config.xml")
+      End If
+      Return _Path
+   End Function
+   
+End Module
+
+Public Class Super
+   Implements IDisposable
+   Friend lPathXML As String
+   Friend WithEvents lPersisteDados As PersisteDados.ClsPersiste
+
+   Public Sub New()
+      lPathXML = gGlobal.Path
+   End Sub
+
+   Private Sub Free()
+      If Not IsNothing(lPersisteDados) Then
+         lPersisteDados.Dispose()
+         lPersisteDados = Nothing
+      End If
+   End Sub
+
+   Public Sub Dispose() Implements System.IDisposable.Dispose
+      Free()
+      System.GC.SuppressFinalize(Me)
+   End Sub
+
+   Protected Overrides Sub Finalize()
+      Free()
+      MyBase.Finalize()
+   End Sub
+   
+End Class

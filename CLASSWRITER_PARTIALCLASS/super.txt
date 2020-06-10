@@ -1,0 +1,27 @@
+Public Class Super
+   Implements IDisposable
+   Friend PathXML As String
+   Friend WithEvents lPersisteDados As PersisteDados.ClsPersiste
+
+   Public Sub New()
+      PathXML = "[Caminho]"
+   End Sub
+
+   Private Sub Free()
+      If Not IsNothing(lPersisteDados) Then
+         lPersisteDados.Dispose()
+         lPersisteDados = Nothing
+      End If
+   End Sub
+
+   Public Sub Dispose() Implements System.IDisposable.Dispose
+      Free()
+      System.GC.SuppressFinalize(Me)
+   End Sub
+
+   Protected Overrides Sub Finalize()
+      Free()
+      MyBase.Finalize()
+   End Sub
+   
+End Class

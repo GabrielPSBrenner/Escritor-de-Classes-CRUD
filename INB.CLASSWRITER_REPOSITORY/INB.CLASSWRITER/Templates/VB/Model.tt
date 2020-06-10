@@ -1,0 +1,87 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+
+Public Partial Class <#=_Tabela.Nome#>
+
+<#If _Tabela.Tipo = LERESTRUTURA.TABLE.eTable.Table Then#>
+
+	#Region "Methods Insert, Update Delete"
+
+		Public Shared Sub Incluir(<#=_Tabela.Nome#> Registro<#=_Config.IdentificacaoUsuarioParam#>)
+		
+			Using db As (DM_<#=_Config.DataContextName#>Container = DataHelper.GetDataContext<#=_Config.DataContextName#>()
+				db.<#=_Tabela.Nome#>.Add(Registro)
+				db.SaveChanges()
+				LogSistema.Registra(eTipoLog.Insert, <#=_Config.IdentificacaoUsuarioLog#>, Registro)
+			End Using
+
+		End Sub
+
+		Public Shaered Sub Alterar(<#=_Tabela.Nome#> Registro<#=_Config.IdentificacaoUsuarioParam#>)
+		
+			Using db As (DM_<#=_Config.DataContextName#>Container = DataHelper.GetDataContext<#=_Config.DataContextName#>()
+				db.Entry(Registro).State = System.Data.Entity.EntityState.Modified
+				db.SaveChanges()
+				LogSistema.Registra(eTipoLog.Update, <#=_Config.IdentificacaoUsuarioLog#>, Registro)
+			End Using
+
+		End Sub
+
+		Public Shared Sub Excluir(<#=_Tabela.Nome#> Registro<#=_Config.IdentificacaoUsuarioParam#>)
+		
+			Using db As (DM_<#=_Config.DataContextName#>Container = DataHelper.GetDataContext<#=_Config.DataContextName#>()			
+				db.Entry(Registro).State = System.Data.Entity.EntityState.Deleted
+				db.SaveChanges()
+				LogSistema.RegistraExcluirSerializa(<#=_Config.IdentificacaoUsuarioLog#>, Registro)
+			End Using
+
+		End Sub
+
+		Public Shared Sub Excluir(<#=_Config.GetParamPK(_Tabela)#><#=_Config.IdentificacaoUsuarioParam#>)
+		
+			Using db As (DM_<#=_Config.DataContextName#>Container = DataHelper.GetDataContext<#=_Config.DataContextName#>()
+				<#=_Tabela.Nome#> Registro = new <#=_Tabela.Nome#>()
+				<#=_Config.GetQueryPKDelete(_Tabela)#>
+				db.Entry(Registro).State = System.Data.Entity.EntityState.Deleted
+				db.SaveChanges()
+				LogSistema.RegistraExcluir(<#=_Config.IdentificacaoUsuarioLog#>, Registro, "Parâmetros: <#=_Config.GetQueryPK(_Tabela)#>")
+			End Using
+
+		End Sub
+
+	#End Region
+
+<#End If 'Termina verificação do tipo de objeto#>
+		
+	#Region "Methods Select"
+
+		Public Shared Function SelecionarTodos(<#=_Config.IdentificacaoUsuarioParam.Replace(",","").Trim()#>) As List(Of <#=_Tabela.Nome#>)
+			
+			Using db As (DM_<#=_Config.DataContextName#>Container = DataHelper.GetDataContext<#=_Config.DataContextName#>()
+				Dim arrResult = (From p in db.<#=_Tabela.Nome#> Select p).ToList()
+<#If _Config.TipoLog = Configuracao.eLog.Tudo Then#>
+                LogSistema.Registra(eTipoLog.Select, <#=_Config.IdentificacaoUsuarioLog#>, GetType(<#=_Tabela.Nome#>), "SelecionarTodos()")
+<#End If#>
+                Return arrResult
+			End Using
+		End Function
+
+		Public Shared Function Selecionar(<#=_Config.GetParamPK(_Tabela)#><#=_Config.IdentificacaoUsuarioParam#>) As <#=_Tabela.Nome#> 
+		
+			Using db As (DM_<#=_Config.DataContextName#>Container = DataHelper.GetDataContext<#=_Config.DataContextName#>()
+				Dim Result As <#=_Tabela.Nome#> = (From p in db.<#=_Tabela.Nome#> <#=_Config.GetQueryPK(_Tabela)#> Select p).FirstOrDefault()
+<#If _Config.TipoLog = Configuracao.eLog.Tudo Then#>
+                LogSistema.Registra(eTipoLog.Select, <#=_Config.IdentificacaoUsuarioLog#>, GetType(<#=_Tabela.Nome#>), "Selecionar()", "<#=_Config.GetParamPK(_Tabela)#>")
+<#End If#>
+                Return Result
+			End Using
+
+		End Function
+
+	#End Region
+
+End Class

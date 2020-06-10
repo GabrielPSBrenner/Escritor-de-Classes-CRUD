@@ -1,0 +1,255 @@
+﻿<#@ template language="VB" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+Imports System.Collections.Generic
+Imports System.Configuration
+Imports System.Linq
+Imports System.Text
+Imports System.Threading.Tasks
+
+
+#Region "Enums"
+
+Public Enum eSistema
+	Generico = 12
+	Corrente = <#=_Config.CodigoSistema#> 'ALTERAR DE ACORDO COM O SISTEMA
+End Enum
+
+Public Enum ePerfil
+	SemAcesso
+	Desenvolvimento
+	SimulaUsuario
+	DefinePermissao
+	Administrador
+
+	PodeAcessar
+	Gestor
+
+End Enum
+
+Public Enum eComparacao
+	[AND]
+	[OR]
+End Enum
+
+Public Enum eError
+	NotFound
+	InsufficientParameters
+	UnableDelete
+	UnableDeleteRelationship
+	RecordTimeIntervalConflicted
+	TimeIntervalConflicted
+	AccessDeniedWeb
+	NotFoundWeb
+	TimeOut
+	InternalError
+	[Custom]
+End Enum
+
+Public Enum eTipoLog
+	Login = 1
+	Logoff = 2
+	Insert = 3
+	Update = 4
+	Delete = 5
+	[Select] = 6
+End Enum
+
+#End Region
+
+Class MyGlobal
+
+	Private Shared bolAmbienteReal As Boolean? = Nothing
+	Public Const CodigoSistema As Integer = CInt(eSistema.Corrente)
+
+	Public Shared Property AmbienteReal() As Boolean
+		Get
+			If bolAmbienteReal Is Nothing Then
+				Try
+					AmbienteReal = Not Boolean.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings("AmbienteTeste"))
+				Catch ex As Exception
+					AmbienteReal = False
+				End Try
+			End If
+			Return CBool(bolAmbienteReal)
+		End Get
+		Set(value As Boolean)
+			bolAmbienteReal = value
+		End Set
+	End Property
+
+	Public Shared ReadOnly Property Matricula() As Integer
+		Get
+			Dim Result As Integer = 0
+			Try
+				If System.Web.HttpContext.Current IsNot Nothing AndAlso System.Web.HttpContext.Current.User IsNot Nothing AndAlso System.Web.HttpContext.Current.User.Identity.Name IsNot Nothing Then
+					Result = Integer.Parse(System.Web.HttpContext.Current.User.Identity.Name)
+				End If
+			Catch ex As Exception
+			End Try
+			Return Result
+		End Get
+	End Property
+
+	Public Shared Function NomeEstacao() As String
+		Dim Result As String
+		Try
+			Try
+				Dim oIPHostName = System.Net.Dns.GetHostEntry(IP())
+				Result = oIPHostName.HostName
+			Catch ex2 As Exception
+				Result = Environment.MachineName
+			End Try
+		Catch ex1 As Exception
+			Return ""
+		End Try
+		Return Result
+	End Function
+
+	Public Shared Function IP() As String
+		Dim Result As [String] = ""
+		Try
+			Try
+				If System.Web.HttpContext.Current IsNot Nothing Then
+					Result = GetIP4Address()
+				Else
+					Dim oIPHostName = System.Net.Dns.GetHostEntry(Environment.MachineName)
+					Dim IPAdd As System.Net.IPAddress() = oIPHostName.AddressList
+
+					For i As Integer = 0 To IPAdd.GetUpperBound(0) - 1
+						If IPAdd(i).ToString().Substring(0, 2) = "10" Then
+							Result = IPAdd(i).ToString()
+							Exit For
+						End If
+					Next
+				End If
+
+			Catch ex2 As Exception
+				Throw ex2
+			End Try
+
+			Return Result
+		Catch ex1 As Exception
+			Return ""
+		End Try
+	End Function
+
+	Public Shared ReadOnly Property EmailSistema() As System.Net.Mail.MailAddress
+		Get
+			Try
+				Dim Mail As String = ConfigurationManager.AppSettings("EmailSistema")
+				Dim arrMail As String() = Nothing
+				If Mail.Contains(",") Then
+					arrMail = Mail.Split(","c)
+					Return New System.Net.Mail.MailAddress(arrMail(0), arrMail(1))
+				End If
+				Return New System.Net.Mail.MailAddress(Mail)
+			Catch ex As Exception
+				Dim foo = ex
+				Return New System.Net.Mail.MailAddress("inbnet@inb.gov.br", "<#=_Config.NomeSistema#>")
+
+			End Try
+		End Get
+	End Property
+
+	Public Shared ReadOnly Property EmailErro() As System.Net.Mail.MailAddressCollection
+		Get
+			Dim arrEmails As New System.Net.Mail.MailAddressCollection()
+			If IsTestEnvironment Then
+				Try
+
+					'tenta enviar para o e-mail de quem está logado no sistema. Se o método foi chamado fora do ambiente web usará as 
+					'definições do EmailErro que pode incluir GERTIemailauto caso não nada tenha sido definido.
+					Dim p = DirectCast(System.Web.HttpContext.Current, System.Web.HttpContext)
+					If p IsNot Nothing Then
+						'busca usuário logado na página
+						If p.Session("Perfil") IsNot Nothing AndAlso DirectCast(p.Session("Perfil"), Perfil).PossuiPerfil(ePerfil.Desenvolvimento) Then
+							Dim iLogin As Integer = 0
+							If Integer.TryParse(p.User.Identity.Name, iLogin) Then
+								arrEmails.Add(INB.Correio.Funcoes.retornaEmail(iLogin).Address)
+							End If
+						Else
+								'não envia e-mail de erros para o usuário logado se ele não for do desenvolvimento
+							arrEmails = GetDefaultErrorEmail()
+						End If
+					Else
+						Try
+								'busca usuário logado na máquina
+							arrEmails.Add(INB.Correio.Funcoes.retornaEmail(Environment.UserName).Address)
+						Catch ex2 As Exception
+							Throw New INBException("Helper.EmailErro: E-mail não encontrado.")
+						End Try
+
+
+					End If
+				Catch ex As Exception
+					Dim foo = ex
+					arrEmails = GetDefaultErrorEmail()
+				End Try
+			Else
+				arrEmails = GetDefaultErrorEmail()
+			End If
+
+			Return arrEmails
+		End Get
+	End Property
+
+	Private Shared Function GetDefaultErrorEmail() As System.Net.Mail.MailAddressCollection
+		Dim arrResult As New System.Net.Mail.MailAddressCollection()
+		Dim cEmails As String = ConfigurationManager.AppSettings("EmailErro") 'busca e-mails cadastrados no .config da aplicação
+		
+		If cEmails.Contains(",") Then
+			For Each Item As String In cEmails.Split(","C)
+				arrResult.Add(Item)
+			Next
+		Else
+			arrResult.Add(cEmails)
+		End If
+		arrResult.Add("GERTIemailauto@inb.gov.br") 'nesse caso sempre inclui a caixa de e-mail automático
+		Return arrResult
+	End Function
+
+	Public Shared ReadOnly Property IsTestEnvironment() As Boolean
+		Get
+			Dim AmbienteTeste As String = ConfigurationManager.AppSettings("AmbienteTeste")
+			Dim IsTest As Boolean = False
+			If String.IsNullOrEmpty(AmbienteTeste) Then
+				IsTest = True
+			Else
+				Boolean.TryParse(AmbienteTeste, IsTest)
+			End If
+			Return IsTest
+		End Get
+	End Property
+
+#Region "Private Methods"
+
+	Private Shared Function GetIP4Address() As String
+		Dim IP4Address As String = [String].Empty
+
+		For Each IPA As System.Net.IPAddress In System.Net.Dns.GetHostAddresses(System.Web.HttpContext.Current.Request.UserHostAddress)
+			If IPA.AddressFamily.ToString() = "InterNetwork" Then
+				IP4Address = IPA.ToString()
+				Exit For
+			End If
+		Next
+
+		If IP4Address <> [String].Empty Then
+			Return IP4Address
+		End If
+
+		For Each IPA As System.Net.IPAddress In System.Net.Dns.GetHostAddresses(System.Net.Dns.GetHostName())
+			If IPA.AddressFamily.ToString() = "InterNetwork" Then
+				IP4Address = IPA.ToString()
+				Exit For
+			End If
+		Next
+		Return IP4Address
+	End Function
+
+#End Region
+
+End Class

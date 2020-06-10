@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="ClassWriter">
+</Property><Property Name="Solution File" Value="C:\PROJETOS\CLASSWRITER_PARTIALCLASS\ClassWriter.sln">
+</Property><Property Name="Date" Value="sexta-feira, 10 de dezembro de 2010">
+</Property><Property Name="Time" Value="14:05">
+</Property><Property Name="Log Number" Value="2">
+</Property></Properties><Event ErrorLevel="0" Project="ClassWriter" Source="ClassWriter.vbproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="ClassWriter" Source="ClassWriter.vbproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="ClassWriter.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="ClassWriter.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ClassWriter" Source="ClassWriter.vbproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="LERESTRUTURA" Source="LERESTRUTURA\LERESTRUTURA.vbproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
